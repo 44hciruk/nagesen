@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
  * Design Philosophy: Japanese Tradition meets Modern Humor
  * - Saisen-bako (offering box) + Maneki-neko (lucky cat) theme
  * - Lightweight coin animation for smooth performance
- * - Large, bold serif text "投げ銭を贈る" (throw coins/donate) above maneki-neko
+ * - Calligraphy text "投げ銭を贈る" (throw coins/donate) above maneki-neko
  * - Warm yellow gradient background
  * - Cohesive color scheme throughout
  */
@@ -25,14 +25,14 @@ export default function Home() {
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-b from-yellow-200 via-yellow-100 to-amber-100 overflow-hidden relative">
-      {/* Coin rain animation - ultra lightweight */}
+      {/* Coin rain animation - increased to 6 coins */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        {[...Array(4)].map((_, i) => (
+        {[...Array(6)].map((_, i) => (
           <div
             key={i}
             className="absolute rounded-full"
             style={{
-              left: `${(i + 1) * 20}%`,
+              left: `${(i + 1) * 14}%`,
               top: `-40px`,
               width: '24px',
               height: '24px',
@@ -120,18 +120,14 @@ export default function Home() {
       {/* Main content */}
       {showContent && (
         <div className="flex flex-col items-center justify-center z-10 px-6 max-w-md gap-8">
-          {/* Main heading - above maneki-neko */}
-          <h1 
-            className="text-4xl text-center text-amber-900 fade-in-up" 
-            style={{
-              textShadow: '2px 2px 4px rgba(0,0,0,0.2)',
-              fontFamily: "'Zen Kurenaido', 'Hiragino Mincho ProN', serif",
-              fontWeight: 400,
-              letterSpacing: '0.08em'
-            }}
-          >
-            投げ銭を贈る
-          </h1>
+          {/* Main heading - calligraphy image */}
+          <div className="fade-in-up">
+            <img 
+              src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663052010650/vMNSMVVvrhnUKaWC.png"
+              alt="投げ銭を贈る"
+              className="h-20 object-contain"
+            />
+          </div>
 
           {/* Maneki-neko image with pop-in animation */}
           <div className="w-64 h-64 relative pop-in">
