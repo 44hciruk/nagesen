@@ -11,7 +11,6 @@ import { useEffect, useState } from 'react';
 
 export default function Home() {
   const [showContent, setShowContent] = useState(false);
-  const [ripples, setRipples] = useState<Array<{ id: number; x: number; y: number }>>([]);
 
   // Show content immediately
   useEffect(() => {
@@ -22,21 +21,6 @@ export default function Home() {
   const handlePayPayRedirect = () => {
     const payPayUrl = 'https://qr.paypay.ne.jp/p2p01_nd8UMxxYcZOhhHUu';
     window.location.href = payPayUrl;
-  };
-
-  // Handle ripple effect
-  const handleMouseDown = (e: React.MouseEvent<HTMLButtonElement>) => {
-    const button = e.currentTarget;
-    const rect = button.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-    const id = Date.now();
-
-    setRipples((prev) => [...prev, { id, x, y }]);
-
-    setTimeout(() => {
-      setRipples((prev) => prev.filter((r) => r.id !== id));
-    }, 600);
   };
 
   return (
@@ -101,14 +85,12 @@ export default function Home() {
           }
         }
 
-        @keyframes ripple {
-          0% {
-            transform: scale(0);
-            opacity: 0.8;
+        @keyframes buttonGlow {
+          0%, 100% {
+            box-shadow: 0 8px 16px rgba(239, 68, 68, 0.5);
           }
-          100% {
-            transform: scale(4);
-            opacity: 0;
+          50% {
+            box-shadow: 0 12px 28px rgba(239, 68, 68, 0.9);
           }
         }
 
@@ -130,12 +112,8 @@ export default function Home() {
           animation: popIn 1s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
         }
 
-        .ripple-effect {
-          position: absolute;
-          border-radius: 50%;
-          background: rgba(255, 255, 255, 0.7);
-          pointer-events: none;
-          animation: ripple 0.6s ease-out forwards;
+        .button-glow {
+          animation: buttonGlow 1.8s ease-in-out infinite;
         }
       `}</style>
 
@@ -164,27 +142,12 @@ export default function Home() {
             />
           </div>
 
-          {/* CTA Button - red gradient with ripple effect */}
+          {/* CTA Button - red gradient with constant glow animation */}
           <button
             onClick={handlePayPayRedirect}
-            onMouseDown={handleMouseDown}
-            className="relative px-8 py-4 text-base font-bold bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white rounded-full shadow-lg hover:shadow-xl transition-all duration-200 fade-in-up-delay-2 overflow-hidden"
+            className="px-8 py-4 text-base font-bold bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white rounded-full transition-all duration-200 fade-in-up-delay-2 button-glow active:scale-95"
           >
             PayPayを開く
-            {ripples.map((ripple) => (
-              <span
-                key={ripple.id}
-                className="ripple-effect"
-                style={{
-                  left: ripple.x,
-                  top: ripple.y,
-                  width: '20px',
-                  height: '20px',
-                  marginLeft: '-10px',
-                  marginTop: '-10px',
-                }}
-              />
-            ))}
           </button>
         </div>
       )}
