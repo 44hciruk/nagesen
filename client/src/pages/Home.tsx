@@ -11,11 +11,34 @@ import { useState, useEffect } from 'react';
 
 export default function Home() {
   const [showContent, setShowContent] = useState(false);
+  const [ripples, setRipples] = useState<Array<{ id: number; x: number; y: number }>>([]);
+  const rippleIdRef = useState(0)[1];
 
   // Show content immediately
   useEffect(() => {
     setShowContent(true);
   }, []);
+
+  // Handle ripple effect on button click
+  const handleRippleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    const button = e.currentTarget;
+    const rect = button.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    const id = Date.now();
+
+    setRipples((prev) => [...prev, { id, x, y }]);
+
+    // Remove ripple after animation completes
+    setTimeout(() => {
+      setRipples((prev) => prev.filter((r) => r.id !== id));
+    }, 600);
+
+    // Trigger redirect after a short delay
+    setTimeout(() => {
+      handlePayPayRedirect();
+    }, 100);
+  };
 
   // Handle redirect to PayPay
   const handlePayPayRedirect = () => {
@@ -110,6 +133,27 @@ export default function Home() {
           }
         }
 
+        @keyframes ripple {
+          0% {
+            width: 0;
+            height: 0;
+            opacity: 1;
+          }
+          100% {
+            width: 600px;
+            height: 600px;
+            opacity: 0;
+          }
+        }
+
+        .ripple {
+          position: absolute;
+          border-radius: 50%;
+          background: rgba(255, 255, 255, 0.6);
+          pointer-events: none;
+          animation: ripple 0.6s ease-out;
+        }
+
         .fade-in-up {
           animation: fadeInUp 0.8s ease-out forwards;
         }
@@ -149,11 +193,22 @@ export default function Home() {
             />
           </div>
 
-          {/* CTA Button - red gradient with pulse animation */}
+          {/* CTA Button - red gradient with ripple animation */}
           <button
-            onClick={handlePayPayRedirect}
-            className="px-10 py-5 text-lg font-bold bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white rounded-full shadow-lg hover:shadow-xl transition-all duration-200 fade-in-up-delay-2 button-pulse"
+            onClick={handleRippleClick}
+            className="relative px-10 py-5 text-lg font-bold bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white rounded-full shadow-lg hover:shadow-xl transition-all duration-200 fade-in-up-delay-2 button-pulse overflow-hidden"
           >
+            {ripples.map((ripple) => (
+              <span
+                key={ripple.id}
+                className="ripple"
+                style={{
+                  left: `${ripple.x}px`,
+                  top: `${ripple.y}px`,
+                  transform: 'translate(-50%, -50%)',
+                }}
+              />
+            ))}
             PayPayを開く
           </button>
         </div>
