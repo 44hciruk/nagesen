@@ -126,10 +126,21 @@ export default function Home() {
 
         @keyframes buttonPulse {
           0%, 100% {
-            opacity: 1;
+            transform: scale(1);
+            box-shadow: 0 8px 24px rgba(239, 68, 68, 0.4);
           }
           50% {
-            opacity: 0.8;
+            transform: scale(1.05);
+            box-shadow: 0 12px 32px rgba(239, 68, 68, 0.6);
+          }
+        }
+
+        @keyframes buttonGlow {
+          0%, 100% {
+            filter: brightness(1);
+          }
+          50% {
+            filter: brightness(1.1);
           }
         }
 
@@ -168,7 +179,7 @@ export default function Home() {
         }
 
         .button-pulse {
-          animation: buttonPulse 1.5s ease-in-out infinite;
+          animation: buttonPulse 1.2s ease-in-out infinite, buttonGlow 1.2s ease-in-out infinite;
         }
       `}</style>
 
