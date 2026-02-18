@@ -26,45 +26,39 @@ export default function Home() {
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-b from-yellow-200 via-yellow-100 to-amber-100 overflow-hidden relative">
-      {/* Realistic coin rain animation */}
-      <div className="absolute inset-0 pointer-events-none">
-        {[...Array(8)].map((_, i) => (
+      {/* Coin rain animation - optimized */}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden">
+        {[...Array(6)].map((_, i) => (
           <div
             key={i}
-            className="absolute"
+            className="absolute rounded-full"
             style={{
               left: `${Math.random() * 100}%`,
-              top: `-60px`,
+              top: `-40px`,
+              width: '28px',
+              height: '28px',
+              background: 'radial-gradient(circle at 30% 30%, #FFED4E, #FFD700)',
+              border: '2px solid #DAA520',
+              borderRadius: '50%',
+              boxShadow: '0 2px 8px rgba(0,0,0,0.2)',
               animationName: 'coinFall',
-              animationDuration: `${5 + Math.random() * 3}s`,
-              animationTimingFunction: 'cubic-bezier(0.25, 0.46, 0.45, 0.94)',
+              animationDuration: `${6 + Math.random() * 2}s`,
+              animationTimingFunction: 'linear',
               animationIterationCount: 'infinite',
-              animationDelay: `${i * 0.3}s`,
+              animationDelay: `${i * 0.5}s`,
+              willChange: 'transform',
             }}
-          >
-            {/* Coin SVG */}
-            <svg
-              width="32"
-              height="32"
-              viewBox="0 0 32 32"
-              className="drop-shadow-md"
-            >
-              <circle cx="16" cy="16" r="14" fill="#FFD700" stroke="#DAA520" strokeWidth="2" />
-              <circle cx="16" cy="16" r="12" fill="none" stroke="#FFF8DC" strokeWidth="1" opacity="0.6" />
-
-            </svg>
-          </div>
+          />
         ))}
       </div>
 
       <style>{`
         @keyframes coinFall {
           0% {
-            transform: translateY(0) rotateY(0deg);
-            opacity: 0.9;
+            opacity: 0.8;
           }
           100% {
-            transform: translateY(100vh) rotateY(360deg);
+            transform: translateY(100vh);
             opacity: 0;
           }
         }
