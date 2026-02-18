@@ -35,7 +35,10 @@ export default function Home() {
             style={{
               left: `${Math.random() * 100}%`,
               top: `-60px`,
-              animation: `coinFall ${4 + Math.random() * 2}s linear infinite`,
+              animationName: 'coinFall',
+              animationDuration: `${4 + Math.random() * 2}s`,
+              animationTimingFunction: 'linear',
+              animationIterationCount: 'infinite',
               animationDelay: `${i * 0.5}s`,
             }}
           >
