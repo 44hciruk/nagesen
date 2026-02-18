@@ -24,11 +24,11 @@ export default function Home() {
   };
 
   // Generate random coins with varying positions and speeds
-  const coins = Array.from({ length: 24 }, (_, i) => ({
+  const coins = Array.from({ length: 8 }, (_, i) => ({
     id: i,
     left: Math.random() * 100,
     duration: 8 + Math.random() * 2,
-    delay: (i / 24) * 1.2,
+    delay: (i / 8) * 1.0,
   }));
 
   return (
@@ -54,6 +54,8 @@ export default function Home() {
               animationIterationCount: 'infinite',
               animationDelay: `${coin.delay}s`,
               willChange: 'transform',
+              perspective: '1000px',
+              transformStyle: 'preserve-3d',
             }}
           />
         ))}
@@ -62,11 +64,14 @@ export default function Home() {
       <style>{`
         @keyframes coinFall {
           0% {
-            transform: translateY(0);
+            transform: translateY(0) rotateY(0deg);
             opacity: 0.7;
           }
+          50% {
+            transform: translateY(50vh) rotateY(180deg);
+          }
           100% {
-            transform: translateY(100vh);
+            transform: translateY(100vh) rotateY(360deg);
             opacity: 0;
           }
         }
