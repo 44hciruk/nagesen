@@ -130,7 +130,7 @@ export default function Home() {
           </div>
 
           {/* Maneki-neko image with pop-in animation */}
-          <div className="w-56 h-56 relative pop-in">
+          <div className="w-56 h-56 relative pop-in -mt-6">
             <img
               src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663052010650/YXhSFzJbaTvJqWxQ.png"
               alt="Maneki-neko"
