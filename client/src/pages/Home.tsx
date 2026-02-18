@@ -145,7 +145,7 @@ export default function Home() {
           {/* CTA Button - red gradient with constant glow animation */}
           <button
             onClick={handlePayPayRedirect}
-            className="px-8 py-4 text-base font-bold bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white rounded-full transition-all duration-200 fade-in-up-delay-2 button-glow active:scale-95"
+            className="relative z-20 px-8 py-4 mt-8 text-base font-bold bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white rounded-full transition-all duration-200 fade-in-up-delay-2 button-glow active:scale-95"
           >
             PayPayを開く
           </button>
