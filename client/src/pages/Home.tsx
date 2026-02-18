@@ -109,17 +109,7 @@ export default function Home() {
           }
         }
 
-        @keyframes slowWaveHand {
-          0%, 100% {
-            transform: rotate(0deg);
-          }
-          25% {
-            transform: rotate(-15deg);
-          }
-          75% {
-            transform: rotate(15deg);
-          }
-        }
+
 
         .fade-in-up {
           animation: fadeInUp 0.6s ease-out forwards;
@@ -143,11 +133,6 @@ export default function Home() {
         .pop-in {
           animation: popIn 1s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
         }
-
-        .maneki-slow-wave {
-          animation: slowWaveHand 1.5s ease-in-out infinite;
-          transform-origin: center top;
-        }
       `}</style>
 
       {/* Main content */}
@@ -156,9 +141,9 @@ export default function Home() {
           {/* Maneki-neko image with pop-in animation */}
           <div className="w-64 h-64 mb-12 relative pop-in">
             <img
-              src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663052010650/HjMfmrBjUPGwumWp.png"
+              src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663052010650/SLnXzQGYVHQwLNqa.png"
               alt="Maneki-neko"
-              className="w-full h-full object-contain maneki-slow-wave"
+              className="w-full h-full object-contain"
             />
           </div>
 
