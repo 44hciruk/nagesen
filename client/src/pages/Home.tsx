@@ -191,12 +191,12 @@ export default function Home() {
             <img 
               src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663052010650/vMNSMVVvrhnUKaWC.png"
               alt="投げ銭を贈る"
-              className="h-32 object-contain"
+              className="h-33 object-contain"
             />
           </div>
 
           {/* Maneki-neko image with pop-in animation */}
-          <div className="w-56 h-56 relative pop-in -mt-6">
+          <div className="w-56 h-56 relative pop-in -mt-10">
             <img
               src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663052010650/BHlLtdKUUWXnMFIV.png"
               alt="Maneki-neko"
