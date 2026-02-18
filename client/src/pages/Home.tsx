@@ -119,7 +119,7 @@ export default function Home() {
 
       {/* Main content */}
       {showContent && (
-        <div className="flex flex-col items-center justify-center z-10 px-6 max-w-md gap-6">
+        <div className="flex flex-col items-center justify-center z-10 px-6 max-w-md gap-2">
           {/* Main heading - calligraphy image */}
           <div className="fade-in-up">
             <img 
