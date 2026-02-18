@@ -36,10 +36,10 @@ export default function Home() {
               left: `${Math.random() * 100}%`,
               top: `-60px`,
               animationName: 'coinFall',
-              animationDuration: `${4 + Math.random() * 2}s`,
-              animationTimingFunction: 'linear',
+              animationDuration: `${5 + Math.random() * 3}s`,
+              animationTimingFunction: 'cubic-bezier(0.25, 0.46, 0.45, 0.94)',
               animationIterationCount: 'infinite',
-              animationDelay: `${i * 0.5}s`,
+              animationDelay: `${i * 0.3}s`,
             }}
           >
             {/* Coin SVG */}
@@ -62,9 +62,6 @@ export default function Home() {
           0% {
             transform: translateY(0) rotateY(0deg);
             opacity: 0.9;
-          }
-          50% {
-            opacity: 0.7;
           }
           100% {
             transform: translateY(100vh) rotateY(360deg);
@@ -141,7 +138,7 @@ export default function Home() {
           {/* Maneki-neko image with pop-in animation */}
           <div className="w-64 h-64 mb-12 relative pop-in">
             <img
-              src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663052010650/SLnXzQGYVHQwLNqa.png"
+              src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663052010650/YXhSFzJbaTvJqWxQ.png"
               alt="Maneki-neko"
               className="w-full h-full object-contain"
             />
