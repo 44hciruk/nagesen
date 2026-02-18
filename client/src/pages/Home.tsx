@@ -83,6 +83,18 @@ export default function Home() {
           }
         }
 
+        @keyframes waveHand {
+          0%, 100% {
+            transform: rotate(0deg);
+          }
+          25% {
+            transform: rotate(-20deg);
+          }
+          75% {
+            transform: rotate(20deg);
+          }
+        }
+
         .fade-in-up {
           animation: fadeInUp 0.6s ease-out forwards;
         }
@@ -96,17 +108,22 @@ export default function Home() {
           animation: fadeInUp 0.6s ease-out 0.4s forwards;
           opacity: 0;
         }
+
+        .maneki-wave {
+          animation: waveHand 0.8s ease-in-out infinite;
+          transform-origin: center bottom;
+        }
       `}</style>
 
       {/* Main content */}
       {showContent && (
         <div className="flex flex-col items-center justify-center z-10 px-6 max-w-md">
-          {/* Saisen-bako + Maneki-neko image */}
-          <div className="w-40 h-40 mb-12 fade-in-up">
+          {/* Saisen-bako + Maneki-neko image with wave animation */}
+          <div className="w-48 h-48 mb-12 fade-in-up relative">
             <img
-              src="https://private-us-east-1.manuscdn.com/sessionFile/sEcir6chkXZ4TN1hcybGzY/sandbox/tYPqTsy0u7RHg8TXS9iTIm-img-1_1771378127000_na1fn_c2Fpc2VuLW1hbmVraS12Mg.png?x-oss-process=image/resize,w_1920,h_1920/format,webp/quality,q_80&Expires=1798761600&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9wcml2YXRlLXVzLWVhc3QtMS5tYW51c2Nkbi5jb20vc2Vzc2lvbkZpbGUvc0VjaXI2Y2hyWFo0VE4xaGN5Ykd6WS9zYW5kYm94L3RZUHFUc3kwdTdSSGc4VFhTOWlUSW0taW1nLTFfMTc3MTM3ODEyNzAwMF9uYTFmbl9jMkZwYzJWdUxXMWhibVZyYVMxMk1nLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSx3XzE5MjAsaF8xOTIwL2Zvcm1hdCx3ZWJwL3F1YWxpdHkscV84MCIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc5ODc2MTYwMH19fV19&Key-Pair-Id=K2HSFNDJXOU9YS&Signature=skzOqrKW9P-4lHcJRpm1kIz-byKrD2d3fcrXNFX~UcvyJhrZDlowqvDKrdM53PN1HKmhkO01OtPW9p46e8QVIT4edHjl2NPAt-EMRi-2Jt2yMOfwU90bp2QhxinrvoBTlrmsuRgp913CNTJsxOmK2EvCr2aF0ob66Ca68dXXEyTUtWi3X-hH76di~kdhuTqlyPzzHvS4Eay0MpFjxGDpFCVCRkY9bH~hZPC~4Pb6Frq7btcEJzWRhZzDj4tjVB4Poos~I7ibdI2in9~8mcDilrtGFLsqEjiLmOWAYOlutk03r56M3uzujJE8AFuqp0vs1dzZpIUe--1hY5qWt8iNOQ__"
+              src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663052010650/aiDhQSjMbcNXDOOX.png"
               alt="Saisen-bako with Maneki-neko"
-              className="w-full h-full object-contain"
+              className="w-full h-full object-contain maneki-wave"
             />
           </div>
 
