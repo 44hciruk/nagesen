@@ -85,12 +85,12 @@ export default function Home() {
           }
         }
 
-        @keyframes buttonGlow {
+        @keyframes buttonPulse {
           0%, 100% {
-            box-shadow: 0 8px 16px rgba(239, 68, 68, 0.5);
+            opacity: 1;
           }
           50% {
-            box-shadow: 0 12px 28px rgba(239, 68, 68, 0.9);
+            opacity: 0.8;
           }
         }
 
@@ -112,17 +112,17 @@ export default function Home() {
           animation: popIn 1s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
         }
 
-        .button-glow {
-          animation: buttonGlow 1.8s ease-in-out infinite;
+        .button-pulse {
+          animation: buttonPulse 1.5s ease-in-out infinite;
         }
       `}</style>
 
       {/* Main content */}
       {showContent && (
-        <div className="flex flex-col items-center justify-center z-10 px-6 max-w-md">
+        <div className="flex flex-col items-center justify-center z-10 px-6 max-w-md gap-8">
           {/* Main heading - above maneki-neko */}
           <h1 
-            className="text-5xl font-black text-center mb-6 text-amber-900 fade-in-up" 
+            className="text-5xl font-black text-center text-amber-900 fade-in-up" 
             style={{
               textShadow: '3px 3px 6px rgba(0,0,0,0.15)',
               fontFamily: "'Noto Serif JP', 'Hiragino Mincho ProN', serif",
@@ -134,7 +134,7 @@ export default function Home() {
           </h1>
 
           {/* Maneki-neko image with pop-in animation */}
-          <div className="w-64 h-64 mb-12 relative pop-in">
+          <div className="w-64 h-64 relative pop-in">
             <img
               src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663052010650/YXhSFzJbaTvJqWxQ.png"
               alt="Maneki-neko"
@@ -142,10 +142,10 @@ export default function Home() {
             />
           </div>
 
-          {/* CTA Button - red gradient with constant glow animation */}
+          {/* CTA Button - red gradient with pulse animation */}
           <button
             onClick={handlePayPayRedirect}
-            className="relative z-20 px-8 py-4 mt-8 text-base font-bold bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white rounded-full transition-all duration-200 fade-in-up-delay-2 button-glow active:scale-95"
+            className="px-8 py-4 text-base font-bold bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white rounded-full shadow-lg hover:shadow-xl transition-all duration-200 fade-in-up-delay-2 button-pulse"
           >
             PayPayを開く
           </button>
