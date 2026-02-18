@@ -11,12 +11,26 @@ import { useState, useEffect } from 'react';
 
 export default function Home() {
   const [showContent, setShowContent] = useState(false);
-  const [ripples, setRipples] = useState<Array<{ id: number; x: number; y: number }>>([]);
+  const [showCalligraphy, setShowCalligraphy] = useState(false);
+  const [showManekiNeko, setShowManekiNeko] = useState(false);
+  const [ripples, setRipples] = useState<Array<{ id: number; x: number; y: number }>>([])
   const rippleIdRef = useState(0)[1];
 
-  // Show content immediately
+  // Show content with staggered animation
   useEffect(() => {
     setShowContent(true);
+    // Show calligraphy first
+    const timer1 = setTimeout(() => {
+      setShowCalligraphy(true);
+    }, 100);
+    // Show maneki-neko after calligraphy
+    const timer2 = setTimeout(() => {
+      setShowManekiNeko(true);
+    }, 600);
+    return () => {
+      clearTimeout(timer1);
+      clearTimeout(timer2);
+    };
   }, []);
 
   // Handle ripple effect on button click
@@ -28,6 +42,12 @@ export default function Home() {
     const id = Date.now();
 
     setRipples((prev) => [...prev, { id, x, y }]);
+
+    // Play meow sound
+    const audio = new Audio('https://files.manuscdn.com/user_upload_by_module/session_file/310519663052010650/SxgKHkdlVWUSQCQF.wav');
+    audio.play().catch(() => {
+      // Silently fail if audio can't play
+    });
 
     // Remove ripple after animation completes
     setTimeout(() => {
@@ -55,7 +75,7 @@ export default function Home() {
   }));
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-b from-yellow-200 via-yellow-100 to-amber-100 overflow-hidden relative">
+    <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-b from-yellow-200 via-yellow-100 to-amber-100 overflow-hidden relative" style={{ backgroundImage: 'url(https://files.manuscdn.com/user_upload_by_module/session_file/310519663052010650/djAUtxiQqvVXUVEv.png)', backgroundBlendMode: 'multiply', backgroundSize: '400px 400px' }}>
       {/* Coin rain animation - 12 coins with random positions and speeds */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
         {coins.map((coin) => (
@@ -185,24 +205,28 @@ export default function Home() {
 
       {/* Main content */}
       {showContent && (
-        <div className="flex flex-col items-center justify-center z-10 px-6 max-w-md gap-8">
+        <div className="flex flex-col items-center justify-center z-10 px-6 max-w-md gap-8 fade-in-up fade-in-up-delay-2">
           {/* Main heading - calligraphy image */}
-          <div className="fade-in-up">
-            <img 
-              src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663052010650/vMNSMVVvrhnUKaWC.png"
-              alt="投げ銭を贈る"
-              className="h-33 object-contain"
-            />
-          </div>
+          {showCalligraphy && (
+            <div className="fade-in-up">
+              <img 
+                src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663052010650/vMNSMVVvrhnUKaWC.png"
+                alt="投げ銭を贈る"
+                className="h-33 object-contain"
+              />
+            </div>
+          )}
 
           {/* Maneki-neko image with pop-in animation */}
-          <div className="w-56 h-56 relative pop-in -mt-10">
-            <img
-              src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663052010650/BHlLtdKUUWXnMFIV.png"
-              alt="Maneki-neko"
-              className="w-full h-full object-contain"
-            />
-          </div>
+          {showManekiNeko && (
+            <div className="w-56 h-56 relative pop-in -mt-10">
+              <img
+                src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663052010650/BHlLtdKUUWXnMFIV.png"
+                alt="Maneki-neko"
+                className="w-full h-full object-contain"
+              />
+            </div>
+          )}
 
           {/* CTA Button - red gradient with ripple animation */}
           <button
