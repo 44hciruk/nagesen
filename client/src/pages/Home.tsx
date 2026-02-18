@@ -119,18 +119,18 @@ export default function Home() {
 
       {/* Main content */}
       {showContent && (
-        <div className="flex flex-col items-center justify-center z-10 px-6 max-w-md gap-8">
+        <div className="flex flex-col items-center justify-center z-10 px-6 max-w-md gap-6">
           {/* Main heading - calligraphy image */}
           <div className="fade-in-up">
             <img 
               src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663052010650/vMNSMVVvrhnUKaWC.png"
               alt="投げ銭を贈る"
-              className="h-20 object-contain"
+              className="h-32 object-contain"
             />
           </div>
 
           {/* Maneki-neko image with pop-in animation */}
-          <div className="w-64 h-64 relative pop-in">
+          <div className="w-56 h-56 relative pop-in">
             <img
               src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663052010650/YXhSFzJbaTvJqWxQ.png"
               alt="Maneki-neko"
@@ -141,7 +141,7 @@ export default function Home() {
           {/* CTA Button - red gradient with pulse animation */}
           <button
             onClick={handlePayPayRedirect}
-            className="px-8 py-4 text-base font-bold bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white rounded-full shadow-lg hover:shadow-xl transition-all duration-200 fade-in-up-delay-2 button-pulse"
+            className="px-10 py-5 text-lg font-bold bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white rounded-full shadow-lg hover:shadow-xl transition-all duration-200 fade-in-up-delay-2 button-pulse"
           >
             PayPayを開く
           </button>
