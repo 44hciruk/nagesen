@@ -122,12 +122,12 @@ export default function Home() {
         <div className="flex flex-col items-center justify-center z-10 px-6 max-w-md gap-8">
           {/* Main heading - above maneki-neko */}
           <h1 
-            className="text-5xl font-black text-center text-amber-900 fade-in-up" 
+            className="text-4xl text-center text-amber-900 fade-in-up" 
             style={{
-              textShadow: '3px 3px 6px rgba(0,0,0,0.15)',
-              fontFamily: "'Noto Serif JP', 'Hiragino Mincho ProN', serif",
-              fontWeight: 900,
-              letterSpacing: '0.05em'
+              textShadow: '2px 2px 4px rgba(0,0,0,0.2)',
+              fontFamily: "'Zen Kurenaido', 'Hiragino Mincho ProN', serif",
+              fontWeight: 400,
+              letterSpacing: '0.08em'
             }}
           >
             投げ銭を贈る
