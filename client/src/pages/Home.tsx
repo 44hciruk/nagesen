@@ -48,7 +48,10 @@ export default function Home() {
               border: '2px solid #DAA520',
               borderRadius: '50%',
               boxShadow: '0 2px 6px rgba(0,0,0,0.15)',
-              animation: `coinFall ${coin.duration}s linear infinite`,
+              animationName: 'coinFall',
+              animationDuration: `${coin.duration}s`,
+              animationTimingFunction: 'linear',
+              animationIterationCount: 'infinite',
               animationDelay: `${coin.delay}s`,
               willChange: 'transform',
             }}
