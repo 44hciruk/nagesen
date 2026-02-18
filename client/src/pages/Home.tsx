@@ -27,8 +27,8 @@ export default function Home() {
   const coins = Array.from({ length: 12 }, (_, i) => ({
     id: i,
     left: Math.random() * 100,
-    duration: 6 + Math.random() * 4,
-    delay: Math.random() * 3,
+    duration: 8 + Math.random() * 2,
+    delay: (i / 12) * 1.5,
   }));
 
   return (
