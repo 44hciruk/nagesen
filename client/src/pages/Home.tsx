@@ -1,27 +1,21 @@
 import { useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
-import { ChevronLeft } from 'lucide-react';
 
 /**
- * Design Philosophy: Playful & Engaging
- * - Yo-yo theme to represent "throwing money" as a joke
- * - Coin rain animation for celebratory feeling
- * - Large, bold text to make the joke clear
- * - Smooth animations and transitions
+ * Design Philosophy: Japanese Tradition meets Modern Humor
+ * - Saisen-bako (offering box) + Maneki-neko (lucky cat) theme
+ * - Realistic coin animation for celebratory feeling
+ * - Large, bold text "投げ銭を贈る" (throw coins/donate)
+ * - Warm yellow gradient background
+ * - Cohesive color scheme throughout
  */
 
 export default function Home() {
-  const [isLoading, setIsLoading] = useState(true);
   const [showContent, setShowContent] = useState(false);
 
-  // Simulate loading animation (1.5 seconds)
+  // Show content immediately
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsLoading(false);
-      setShowContent(true);
-    }, 1500);
-
-    return () => clearTimeout(timer);
+    setShowContent(true);
   }, []);
 
   // Handle redirect to PayPay
@@ -30,50 +24,50 @@ export default function Home() {
     window.location.href = payPayUrl;
   };
 
-  // Handle go back
-  const handleGoBack = () => {
-    window.history.back();
-  };
-
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-cyan-100 via-yellow-100 to-orange-100 overflow-hidden relative">
-      {/* Coin rain background animation */}
+    <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-b from-yellow-200 via-yellow-100 to-amber-100 overflow-hidden relative">
+      {/* Realistic coin rain animation */}
       <div className="absolute inset-0 pointer-events-none">
-        {[...Array(5)].map((_, i) => (
+        {[...Array(8)].map((_, i) => (
           <div
             key={i}
-            className="absolute w-12 h-12 rounded-full bg-yellow-300 opacity-0 animate-pulse"
+            className="absolute"
             style={{
               left: `${Math.random() * 100}%`,
-              top: `-50px`,
-              animation: `fall ${3 + i * 0.5}s infinite`,
-              animationDelay: `${i * 0.4}s`,
+              top: `-60px`,
+              animation: `coinFall ${4 + Math.random() * 2}s linear infinite`,
+              animationDelay: `${i * 0.5}s`,
             }}
-          />
+          >
+            {/* Coin SVG */}
+            <svg
+              width="32"
+              height="32"
+              viewBox="0 0 32 32"
+              className="drop-shadow-md"
+            >
+              <circle cx="16" cy="16" r="14" fill="#FFD700" stroke="#DAA520" strokeWidth="2" />
+              <circle cx="16" cy="16" r="12" fill="none" stroke="#FFF8DC" strokeWidth="1" opacity="0.6" />
+              <text x="16" y="20" textAnchor="middle" fontSize="12" fontWeight="bold" fill="#8B6914" fontFamily="serif">
+                ¥
+              </text>
+            </svg>
+          </div>
         ))}
       </div>
 
       <style>{`
-        @keyframes fall {
+        @keyframes coinFall {
           0% {
-            transform: translateY(0) rotate(0deg);
-            opacity: 0.8;
+            transform: translateY(0) rotateY(0deg);
+            opacity: 0.9;
           }
           50% {
-            opacity: 0.6;
+            opacity: 0.7;
           }
           100% {
-            transform: translateY(100vh) rotate(360deg);
+            transform: translateY(100vh) rotateY(360deg);
             opacity: 0;
-          }
-        }
-
-        @keyframes spin {
-          from {
-            transform: rotate(0deg);
-          }
-          to {
-            transform: rotate(360deg);
           }
         }
 
@@ -86,10 +80,6 @@ export default function Home() {
             opacity: 1;
             transform: translateY(0);
           }
-        }
-
-        .yoyo-spin {
-          animation: spin 2s linear infinite;
         }
 
         .fade-in-up {
@@ -107,58 +97,38 @@ export default function Home() {
         }
       `}</style>
 
-      {/* Loading screen */}
-      {isLoading && (
-        <div className="flex flex-col items-center justify-center z-10">
-          <div className="w-24 h-24 mb-6">
-            <img
-              src="https://private-us-east-1.manuscdn.com/sessionFile/sEcir6chkXZ4TN1hcybGzY/sandbox/h7IeElmcfe5fb5a6Uk2YFl-img-1_1771377019000_na1fn_eW95by1oZXJv.png?x-oss-process=image/resize,w_1920,h_1920/format,webp/quality,q_80&Expires=1798761600&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9wcml2YXRlLXVzLWVhc3QtMS5tYW51c2Nkbi5jb20vc2Vzc2lvbkZpbGUvc0VjaXI2Y2hrWFo0VE4xaGN5Ykd6WS9zYW5kYm94L2g3SWVFbG1jZmU1ZmI1YTZVazJZRmwtaW1nLTFfMTc3MTM3NzAxOTAwMF9uYTFmbl9lVzk1Ynkxb1pYSnYucG5nP3gtb3NzLXByb2Nlc3M9aW1hZ2UvcmVzaXplLHdfMTkyMCxoXzE5MjAvZm9ybWF0LHdlYnAvcXVhbGl0eSxxXzgwIiwiQ29uZGl0aW9uIjp7IkRhdGVMZXNzVGhhbiI6eyJBV1M6RXBvY2hUaW1lIjoxNzk4NzYxNjAwfX19XX0_&Key-Pair-Id=K2HSFNDJXOU9YS&Signature=iyRCWpQOeAID303DwhG1cxE-7dMMXZAFbrDjY4togJaTXoGmefIXmd0Or9tPa6uJuWFPtfEkaODaGmp-fLvdB~1~eGr~ZA2~ikH~QGnPPhBKJTs-IWsFj7h8toFm508GACCj~~9VhPSK7dfHcl8B0ugFxpiT~QQIv~nY8F7o5PUK4LngkwAJIPXwfN9oSyUPmuzuCaIQGquZsKTlERgGRM53AM2Gaaqz9Pr~VCgGPMQLqUMrXIl--36uXPNDqWQXPF97gys0t~DRX~32Y-TRKzjHUh6ooPNACcR3OpMt9OrOb4hfE-O9ZnrofX7taWEA-K1cWdIZxCbWdMNzHemxsw__"
-              alt="Yo-yo"
-              className="w-full h-full object-contain yoyo-spin"
-            />
-          </div>
-          <p className="text-lg font-semibold text-gray-700 fade-in-up">投げ銭を贈る準備中...</p>
-        </div>
-      )}
-
       {/* Main content */}
       {showContent && (
         <div className="flex flex-col items-center justify-center z-10 px-6 max-w-md">
-          {/* Yo-yo image */}
-          <div className="w-32 h-32 mb-8 fade-in-up">
+          {/* Saisen-bako + Maneki-neko image */}
+          <div className="w-40 h-40 mb-12 fade-in-up">
             <img
-              src="https://private-us-east-1.manuscdn.com/sessionFile/sEcir6chkXZ4TN1hcybGzY/sandbox/h7IeElmcfe5fb5a6Uk2YFl-img-1_1771377019000_na1fn_eW95by1oZXJv.png?x-oss-process=image/resize,w_1920,h_1920/format,webp/quality,q_80&Expires=1798761600&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9wcml2YXRlLXVzLWVhc3QtMS5tYW51c2Nkbi5jb20vc2Vzc2lvbkZpbGUvc0VjaXI2Y2hrWFo0VE4xaGN5Ykd6WS9zYW5kYm94L2g3SWVFbG1jZmU1ZmI1YTZVazJZRmwtaW1nLTFfMTc3MTM3NzAxOTAwMF9uYTFmbl9lVzk1Ynkxb1pYSnYucG5nP3gtb3NzLXByb2Nlc3M9aW1hZ2UvcmVzaXplLHdfMTkyMCxoXzE5MjAvZm9ybWF0LHdlYnAvcXVhbGl0eSxxXzgwIiwiQ29uZGl0aW9uIjp7IkRhdGVMZXNzVGhhbiI6eyJBV1M6RXBvY2hUaW1lIjoxNzk4NzYxNjAwfX19XX0_&Key-Pair-Id=K2HSFNDJXOU9YS&Signature=iyRCWpQOeAID303DwhG1cxE-7dMMXZAFbrDjY4togJaTXoGmefIXmd0Or9tPa6uJuWFPtfEkaODaGmp-fLvdB~1~eGr~ZA2~ikH~QGnPPhBKJTs-IWsFj7h8toFm508GACCj~~9VhPSK7dfHcl8B0ugFxpiT~QQIv~nY8F7o5PUK4LngkwAJIPXwfN9oSyUPmuzuCaIQGquZsKTlERgGRM53AM2Gaaqz9Pr~VCgGPMQLqUMrXIl--36uXPNDqWQXPF97gys0t~DRX~32Y-TRKzjHUh6ooPNACcR3OpMt9OrOb4hfE-O9ZnrofX7taWEA-K1cWdIZxCbWdMNzHemxsw__"
-              alt="Yo-yo"
-              className="w-full h-full object-contain yoyo-spin"
+              src="https://private-us-east-1.manuscdn.com/sessionFile/sEcir6chkXZ4TN1hcybGzY/sandbox/TH26OjOaZ9POIFyWLxcsTi-img-1_1771377790000_na1fn_c2Fpc2VuLW1hbmVraQ.png?x-oss-process=image/resize,w_1920,h_1920/format,webp/quality,q_80&Expires=1798761600&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9wcml2YXRlLXVzLWVhc3QtMS5tYW51c2Nkbi5jb20vc2Vzc2lvbkZpbGUvc0VjaXI2Y2hyWFo0VE4xaGN5Ykd6WS9zYW5kYm94L1RIMjZPak9hWjlQT0lGeVdMeGNzVGktaW1nLTFfMTc3MTM3Nzc5MDAwMF9uYTFmbl9jMkZwYzJWdUxXMWhibVZyYVEucG5nP3gtb3NzLXByb2Nlc3M9aW1hZ2UvcmVzaXplLHdfMTkyMCxoXzE5MjAvZm9ybWF0LHdlYnAvcXVhbGl0eSxxXzgwIiwiQ29uZGl0aW9uIjp7IkRhdGVMZXNzVGhhbiI6eyJBV1M6RXBvY2hUaW1lIjoxNzk4NzYxNjAwfX19XX0_&Key-Pair-Id=K2HSFNDJXOU9YS&Signature=rjLVw5iaKi0aHY7JyFzjoZt8YA9YvhSAOP1Sc2jYmox0KBDRvasIyqTbSD6yoNYNu9pEcvztX2IeOdeyikNTZd7XlnhAgubRq~sFOpjHLlZHpI99oOW0ljvthFUdvILfuqWmf-4UwkUTmQ8S4ScnW4hDV4XkgzLXe06voCiaR2C-OZ~rgAA8FH52qe5rOZk2gJ1oLicTjJIWrtCNXXiF93~nZLOt5~0Z-UtC~7qGrx5TVkLiayxVtjlSPRTigbSX-k5BPjkCUENyJcdPOZEeae~67SUXTpekR9YtJLCC2afTX-Q-wqH78PwSLy~UZ90jcD~fEtnx~a6zBB7f0JmaNA__"
+              alt="Saisen-bako with Maneki-neko"
+              className="w-full h-full object-contain"
             />
           </div>
 
-          {/* Main heading */}
-          <h1 className="text-5xl font-black text-center mb-4 text-purple-700 fade-in-up-delay-1">
+          {/* Main heading - only "投げ銭を贈る" */}
+          <h1 className="text-6xl font-black text-center mb-8 text-amber-900 fade-in-up-delay-1" style={{ textShadow: '2px 2px 4px rgba(0,0,0,0.1)' }}>
             投げ銭を贈る
           </h1>
 
-          {/* Subheading */}
-          <p className="text-xl text-center text-gray-700 mb-8 fade-in-up-delay-2">
-            ヨーヨーをタッチして、投げ銭を贈りましょう！
-          </p>
-
-          {/* CTA Button */}
+          {/* CTA Button - styled to match yellow theme */}
           <Button
             onClick={handlePayPayRedirect}
-            className="w-full py-6 text-lg font-bold mb-3 bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white rounded-lg shadow-lg hover:shadow-xl transition-all duration-200 fade-in-up-delay-2"
+            className="w-full py-7 text-lg font-bold mb-3 bg-gradient-to-r from-amber-400 to-yellow-400 hover:from-amber-500 hover:to-yellow-500 text-amber-900 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-200 fade-in-up-delay-2 border-2 border-amber-600"
           >
             PayPayを開く
           </Button>
 
-          {/* Back button */}
+          {/* Back button - subtle */}
           <Button
-            onClick={handleGoBack}
+            onClick={() => window.history.back()}
             variant="ghost"
-            className="w-full text-gray-600 hover:text-gray-800 fade-in-up-delay-2"
+            className="w-full text-amber-700 hover:text-amber-900 hover:bg-amber-50 fade-in-up-delay-2"
           >
-            <ChevronLeft className="w-4 h-4 mr-2" />
-            戻る
+            ← 戻る
           </Button>
         </div>
       )}
