@@ -95,6 +95,20 @@ export default function Home() {
           }
         }
 
+        @keyframes popIn {
+          0% {
+            opacity: 0;
+            transform: scale(0.3);
+          }
+          50% {
+            transform: scale(1.1);
+          }
+          100% {
+            opacity: 1;
+            transform: scale(1);
+          }
+        }
+
         .fade-in-up {
           animation: fadeInUp 0.6s ease-out forwards;
         }
@@ -113,15 +127,19 @@ export default function Home() {
           animation: waveHand 0.8s ease-in-out infinite;
           transform-origin: center bottom;
         }
+
+        .pop-in {
+          animation: popIn 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
+        }
       `}</style>
 
       {/* Main content */}
       {showContent && (
         <div className="flex flex-col items-center justify-center z-10 px-6 max-w-md">
-          {/* Saisen-bako + Maneki-neko image with wave animation */}
-          <div className="w-48 h-48 mb-12 fade-in-up relative">
+          {/* Saisen-bako + Maneki-neko image with pop-in animation */}
+          <div className="w-56 h-56 mb-12 relative pop-in">
             <img
-              src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663052010650/aiDhQSjMbcNXDOOX.png"
+              src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663052010650/xuDPocbNCKzHyCUo.png"
               alt="Saisen-bako with Maneki-neko"
               className="w-full h-full object-contain maneki-wave"
             />
