@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState, useEffect } from 'react';
 
 /**
  * Design Philosophy: Japanese Tradition meets Modern Humor
@@ -23,16 +23,24 @@ export default function Home() {
     window.location.href = payPayUrl;
   };
 
+  // Generate random coins with varying positions and speeds
+  const coins = Array.from({ length: 12 }, (_, i) => ({
+    id: i,
+    left: Math.random() * 100,
+    duration: 6 + Math.random() * 4,
+    delay: Math.random() * 3,
+  }));
+
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-b from-yellow-200 via-yellow-100 to-amber-100 overflow-hidden relative">
-      {/* Coin rain animation - increased to 6 coins */}
+      {/* Coin rain animation - 12 coins with random positions and speeds */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        {[...Array(6)].map((_, i) => (
+        {coins.map((coin) => (
           <div
-            key={i}
+            key={coin.id}
             className="absolute rounded-full"
             style={{
-              left: `${(i + 1) * 14}%`,
+              left: `${coin.left}%`,
               top: `-40px`,
               width: '24px',
               height: '24px',
@@ -40,8 +48,8 @@ export default function Home() {
               border: '2px solid #DAA520',
               borderRadius: '50%',
               boxShadow: '0 2px 6px rgba(0,0,0,0.15)',
-              animation: `coinFall ${7 + i * 0.5}s linear infinite`,
-              animationDelay: `${i * 0.8}s`,
+              animation: `coinFall ${coin.duration}s linear infinite`,
+              animationDelay: `${coin.delay}s`,
               willChange: 'transform',
             }}
           />
@@ -95,21 +103,16 @@ export default function Home() {
         }
 
         .fade-in-up {
-          animation: fadeInUp 0.6s ease-out forwards;
-        }
-
-        .fade-in-up-delay-1 {
-          animation: fadeInUp 0.6s ease-out 0.2s forwards;
-          opacity: 0;
+          animation: fadeInUp 0.8s ease-out forwards;
         }
 
         .fade-in-up-delay-2 {
-          animation: fadeInUp 0.6s ease-out 0.4s forwards;
-          opacity: 0;
+          animation: fadeInUp 0.8s ease-out forwards;
+          animation-delay: 0.4s;
         }
 
         .pop-in {
-          animation: popIn 1s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
+          animation: popIn 1s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
         }
 
         .button-pulse {
