@@ -48,9 +48,7 @@ export default function Home() {
             >
               <circle cx="16" cy="16" r="14" fill="#FFD700" stroke="#DAA520" strokeWidth="2" />
               <circle cx="16" cy="16" r="12" fill="none" stroke="#FFF8DC" strokeWidth="1" opacity="0.6" />
-              <text x="16" y="20" textAnchor="middle" fontSize="12" fontWeight="bold" fill="#8B6914" fontFamily="serif">
-                ¥
-              </text>
+
             </svg>
           </div>
         ))}
@@ -103,32 +101,23 @@ export default function Home() {
           {/* Saisen-bako + Maneki-neko image */}
           <div className="w-40 h-40 mb-12 fade-in-up">
             <img
-              src="https://private-us-east-1.manuscdn.com/sessionFile/sEcir6chkXZ4TN1hcybGzY/sandbox/TH26OjOaZ9POIFyWLxcsTi-img-1_1771377790000_na1fn_c2Fpc2VuLW1hbmVraQ.png?x-oss-process=image/resize,w_1920,h_1920/format,webp/quality,q_80&Expires=1798761600&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9wcml2YXRlLXVzLWVhc3QtMS5tYW51c2Nkbi5jb20vc2Vzc2lvbkZpbGUvc0VjaXI2Y2hyWFo0VE4xaGN5Ykd6WS9zYW5kYm94L1RIMjZPak9hWjlQT0lGeVdMeGNzVGktaW1nLTFfMTc3MTM3Nzc5MDAwMF9uYTFmbl9jMkZwYzJWdUxXMWhibVZyYVEucG5nP3gtb3NzLXByb2Nlc3M9aW1hZ2UvcmVzaXplLHdfMTkyMCxoXzE5MjAvZm9ybWF0LHdlYnAvcXVhbGl0eSxxXzgwIiwiQ29uZGl0aW9uIjp7IkRhdGVMZXNzVGhhbiI6eyJBV1M6RXBvY2hUaW1lIjoxNzk4NzYxNjAwfX19XX0_&Key-Pair-Id=K2HSFNDJXOU9YS&Signature=rjLVw5iaKi0aHY7JyFzjoZt8YA9YvhSAOP1Sc2jYmox0KBDRvasIyqTbSD6yoNYNu9pEcvztX2IeOdeyikNTZd7XlnhAgubRq~sFOpjHLlZHpI99oOW0ljvthFUdvILfuqWmf-4UwkUTmQ8S4ScnW4hDV4XkgzLXe06voCiaR2C-OZ~rgAA8FH52qe5rOZk2gJ1oLicTjJIWrtCNXXiF93~nZLOt5~0Z-UtC~7qGrx5TVkLiayxVtjlSPRTigbSX-k5BPjkCUENyJcdPOZEeae~67SUXTpekR9YtJLCC2afTX-Q-wqH78PwSLy~UZ90jcD~fEtnx~a6zBB7f0JmaNA__"
+              src="https://private-us-east-1.manuscdn.com/sessionFile/sEcir6chkXZ4TN1hcybGzY/sandbox/tYPqTsy0u7RHg8TXS9iTIm-img-1_1771378127000_na1fn_c2Fpc2VuLW1hbmVraS12Mg.png?x-oss-process=image/resize,w_1920,h_1920/format,webp/quality,q_80&Expires=1798761600&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9wcml2YXRlLXVzLWVhc3QtMS5tYW51c2Nkbi5jb20vc2Vzc2lvbkZpbGUvc0VjaXI2Y2hyWFo0VE4xaGN5Ykd6WS9zYW5kYm94L3RZUHFUc3kwdTdSSGc4VFhTOWlUSW0taW1nLTFfMTc3MTM3ODEyNzAwMF9uYTFmbl9jMkZwYzJWdUxXMWhibVZyYVMxMk1nLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSx3XzE5MjAsaF8xOTIwL2Zvcm1hdCx3ZWJwL3F1YWxpdHkscV84MCIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc5ODc2MTYwMH19fV19&Key-Pair-Id=K2HSFNDJXOU9YS&Signature=skzOqrKW9P-4lHcJRpm1kIz-byKrD2d3fcrXNFX~UcvyJhrZDlowqvDKrdM53PN1HKmhkO01OtPW9p46e8QVIT4edHjl2NPAt-EMRi-2Jt2yMOfwU90bp2QhxinrvoBTlrmsuRgp913CNTJsxOmK2EvCr2aF0ob66Ca68dXXEyTUtWi3X-hH76di~kdhuTqlyPzzHvS4Eay0MpFjxGDpFCVCRkY9bH~hZPC~4Pb6Frq7btcEJzWRhZzDj4tjVB4Poos~I7ibdI2in9~8mcDilrtGFLsqEjiLmOWAYOlutk03r56M3uzujJE8AFuqp0vs1dzZpIUe--1hY5qWt8iNOQ__"
               alt="Saisen-bako with Maneki-neko"
               className="w-full h-full object-contain"
             />
           </div>
 
           {/* Main heading - only "投げ銭を贈る" */}
-          <h1 className="text-6xl font-black text-center mb-8 text-amber-900 fade-in-up-delay-1" style={{ textShadow: '2px 2px 4px rgba(0,0,0,0.1)' }}>
+          <h1 className="text-4xl font-black text-center mb-8 text-amber-900 fade-in-up-delay-1" style={{ textShadow: '2px 2px 4px rgba(0,0,0,0.1)' }}>
             投げ銭を贈る
           </h1>
 
-          {/* CTA Button - styled to match yellow theme */}
+          {/* CTA Button - red gradient with white text */}
           <Button
             onClick={handlePayPayRedirect}
-            className="w-full py-7 text-lg font-bold mb-3 bg-gradient-to-r from-amber-400 to-yellow-400 hover:from-amber-500 hover:to-yellow-500 text-amber-900 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-200 fade-in-up-delay-2 border-2 border-amber-600"
+            className="w-full py-7 text-lg font-bold bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-200 fade-in-up-delay-2"
           >
             PayPayを開く
-          </Button>
-
-          {/* Back button - subtle */}
-          <Button
-            onClick={() => window.history.back()}
-            variant="ghost"
-            className="w-full text-amber-700 hover:text-amber-900 hover:bg-amber-50 fade-in-up-delay-2"
-          >
-            ← 戻る
           </Button>
         </div>
       )}
