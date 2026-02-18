@@ -24,11 +24,11 @@ export default function Home() {
   };
 
   // Generate random coins with varying positions and speeds
-  const coins = Array.from({ length: 12 }, (_, i) => ({
+  const coins = Array.from({ length: 24 }, (_, i) => ({
     id: i,
     left: Math.random() * 100,
     duration: 8 + Math.random() * 2,
-    delay: (i / 12) * 1.5,
+    delay: (i / 24) * 1.2,
   }));
 
   return (
