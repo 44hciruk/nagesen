@@ -16,21 +16,18 @@ export default function Home() {
   const [ripples, setRipples] = useState<Array<{ id: number; x: number; y: number }>>([])
   const rippleIdRef = useState(0)[1];
 
-  // Show content with staggered animation
+  // Show content with floating animation and auto-play meow sound
   useEffect(() => {
     setShowContent(true);
-    // Show calligraphy first
-    const timer1 = setTimeout(() => {
-      setShowCalligraphy(true);
-    }, 100);
-    // Show maneki-neko after calligraphy
-    const timer2 = setTimeout(() => {
-      setShowManekiNeko(true);
-    }, 600);
-    return () => {
-      clearTimeout(timer1);
-      clearTimeout(timer2);
-    };
+    // Show both calligraphy and maneki-neko simultaneously
+    setShowCalligraphy(true);
+    setShowManekiNeko(true);
+    
+    // Auto-play meow sound on page load
+    const audio = new Audio('https://files.manuscdn.com/user_upload_by_module/session_file/310519663052010650/SxgKHkdlVWUSQCQF.wav');
+    audio.play().catch(() => {
+      // Silently fail if audio can't play
+    });
   }, []);
 
   // Handle ripple effect on button click
@@ -130,6 +127,17 @@ export default function Home() {
           }
         }
 
+        @keyframes floatIn {
+          from {
+            opacity: 0;
+            transform: translateY(30px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+
         @keyframes popIn {
           0% {
             opacity: 0;
@@ -208,7 +216,7 @@ export default function Home() {
         <div className="flex flex-col items-center justify-center z-10 px-6 max-w-md gap-8 fade-in-up fade-in-up-delay-2">
           {/* Main heading - calligraphy image */}
           {showCalligraphy && (
-            <div className="fade-in-up">
+            <div style={{ animation: 'floatIn 0.8s ease-out forwards' }}>
               <img 
                 src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663052010650/vMNSMVVvrhnUKaWC.png"
                 alt="投げ銭を贈る"
@@ -217,9 +225,9 @@ export default function Home() {
             </div>
           )}
 
-          {/* Maneki-neko image with pop-in animation */}
+          {/* Maneki-neko image with floating animation */}
           {showManekiNeko && (
-            <div className="w-56 h-56 relative pop-in -mt-10">
+            <div className="w-56 h-56 relative -mt-10" style={{ animation: 'floatIn 0.8s ease-out forwards' }}>
               <img
                 src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663052010650/BHlLtdKUUWXnMFIV.png"
                 alt="Maneki-neko"
