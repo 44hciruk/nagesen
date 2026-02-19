@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 
 /**
  * Design Philosophy: Japanese Tradition meets Modern Humor
@@ -16,14 +16,6 @@ export default function Home() {
   const [ripples, setRipples] = useState<Array<{ id: number; x: number; y: number }>>([]);
   const rippleIdRef = useState(0)[1];
   const [isThrowingEffect, setIsThrowingEffect] = useState(false);
-  const [isMusicOn, setIsMusicOn] = useState(() => {
-    if (typeof window !== 'undefined') {
-      const saved = localStorage.getItem('bgmEnabled');
-      return saved ? JSON.parse(saved) : true;
-    }
-    return true;
-  });
-  const audioRef = useRef<HTMLAudioElement>(null);
 
   // Show content with gentle fade-in animation and prevent scrolling
   useEffect(() => {
@@ -35,39 +27,10 @@ export default function Home() {
     // Prevent vertical scrolling
     document.body.style.overflow = 'hidden';
     
-    // Initialize background music
-    const initAudio = async () => {
-      if (audioRef.current && isMusicOn) {
-        audioRef.current.volume = 0.05;
-        audioRef.current.loop = true;
-        try {
-          await audioRef.current.play();
-        } catch (err) {
-          console.log('Autoplay blocked');
-        }
-      }
-    };
-    
-    initAudio();
-    
-    // Fallback: play on first user interaction
-    const handleUserInteraction = () => {
-      if (audioRef.current && audioRef.current.paused && isMusicOn) {
-        audioRef.current.play().catch(() => {});
-      }
-      document.removeEventListener('click', handleUserInteraction);
-      document.removeEventListener('touchstart', handleUserInteraction);
-    };
-    
-    document.addEventListener('click', handleUserInteraction);
-    document.addEventListener('touchstart', handleUserInteraction);
-    
     return () => {
       document.body.style.overflow = 'auto';
-      document.removeEventListener('click', handleUserInteraction);
-      document.removeEventListener('touchstart', handleUserInteraction);
     };
-  }, [isMusicOn]);
+  }, []);
 
   // Handle ripple effect on button click
   const handleRippleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -100,22 +63,6 @@ export default function Home() {
   const handlePayPayRedirect = () => {
     const payPayUrl = 'https://qr.paypay.ne.jp/p2p01_nd8UMxxYcZOhhHUu';
     window.location.href = payPayUrl;
-  };
-
-  // Handle music toggle
-  const handleMusicToggle = () => {
-    const newState = !isMusicOn;
-    setIsMusicOn(newState);
-    localStorage.setItem('bgmEnabled', JSON.stringify(newState));
-    
-    if (audioRef.current) {
-      if (newState) {
-        audioRef.current.volume = 0.05;
-        audioRef.current.play().catch(() => {});
-      } else {
-        audioRef.current.pause();
-      }
-    }
   };
 
   // Generate random coins with varying positions, speeds, and types
@@ -253,22 +200,6 @@ export default function Home() {
         })}
       </div>
 
-      {/* Background music */}
-      <audio ref={audioRef} src="/bgm.mp3" />
-
-      {/* Music control bar at bottom */}
-      <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/30 to-transparent px-6 py-4 flex items-center justify-center gap-3 z-20">
-        <button
-          onClick={handleMusicToggle}
-          className="flex items-center justify-center gap-2 px-4 py-2 bg-white/90 hover:bg-white rounded-full shadow-md transition-all duration-200"
-          title={isMusicOn ? 'Music on' : 'Music off'}
-        >
-          <span className="text-sm font-medium text-gray-800">
-            {isMusicOn ? '🔊 Music' : '🔇 Muted'}
-          </span>
-        </button>
-      </div>
-
       <style>{`
         @keyframes coinFall {
           0% {
@@ -390,15 +321,6 @@ export default function Home() {
         /* Ensure button animations work with inline styles */
         button {
           animation-delay: 0s;
-        }
-
-        /* Music control button */
-        .music-btn {
-          transition: all 0.3s ease;
-        }
-
-        .music-btn:active {
-          transform: scale(0.95);
         }
       `}</style>
 
