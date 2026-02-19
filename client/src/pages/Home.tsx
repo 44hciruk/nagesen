@@ -13,8 +13,9 @@ export default function Home() {
   const [showContent, setShowContent] = useState(false);
   const [showCalligraphy, setShowCalligraphy] = useState(false);
   const [showManekiNeko, setShowManekiNeko] = useState(false);
-  const [ripples, setRipples] = useState<Array<{ id: number; x: number; y: number }>>([])
+  const [ripples, setRipples] = useState<Array<{ id: number; x: number; y: number }>>([]);
   const rippleIdRef = useState(0)[1];
+  const [isThrowingEffect, setIsThrowingEffect] = useState(false);
 
   // Show content with gentle fade-in animation and prevent scrolling
   useEffect(() => {
@@ -41,6 +42,12 @@ export default function Home() {
 
     setRipples((prev) => [...prev, { id, x, y }]);
 
+    // Trigger throwing effect
+    setIsThrowingEffect(true);
+    setTimeout(() => {
+      setIsThrowingEffect(false);
+    }, 1500);
+
     // Remove ripple after animation completes
     setTimeout(() => {
       setRipples((prev) => prev.filter((r) => r.id !== id));
@@ -60,7 +67,7 @@ export default function Home() {
 
   // Generate random coins with varying positions, speeds, and types
   // Create continuous waterfall effect with staggered delays
-  const coins = Array.from({ length: 6 }, (_, i) => {
+  const baseCoins = Array.from({ length: 6 }, (_, i) => {
     const coinTypes = ['coin2', 'coin3', 'coin4', 'coin5'];
     const randomType = coinTypes[Math.floor(Math.random() * coinTypes.length)];
     const duration = 10 + Math.random() * 3; // Slower fall (10-13s)
@@ -75,7 +82,7 @@ export default function Home() {
   });
 
   // Generate sparkles (キラキラ) mixed with coins - reduced to 4 for less overlap
-  const sparkles = Array.from({ length: 4 }, (_, i) => {
+  const baseSparkles = Array.from({ length: 4 }, (_, i) => {
     const sparkleTypes = ['kira1', 'kira2'];
     const randomType = sparkleTypes[Math.floor(Math.random() * sparkleTypes.length)];
     const duration = (8 + Math.random() * 4) / 0.7; // 70% speed (11.4-17.1s)
@@ -89,14 +96,42 @@ export default function Home() {
     };
   });
 
+  // Generate burst coins for throwing effect
+  const burstCoins = isThrowingEffect
+    ? Array.from({ length: 20 }, (_, i) => ({
+        id: `burst-coin-${i}`,
+        left: 50 + (Math.random() - 0.5) * 20, // Center area
+        duration: 0.8 + Math.random() * 0.4, // Fast burst (0.8-1.2s)
+        delay: 0,
+        type: ['coin2', 'coin3', 'coin4', 'coin5'][Math.floor(Math.random() * 4)],
+        isSparkle: false,
+        isBurst: true,
+      }))
+    : [];
+
+  // Generate burst sparkles for throwing effect
+  const burstSparkles = isThrowingEffect
+    ? Array.from({ length: 15 }, (_, i) => ({
+        id: `burst-sparkle-${i}`,
+        left: 50 + (Math.random() - 0.5) * 20, // Center area
+        duration: 0.6 + Math.random() * 0.3, // Fast burst (0.6-0.9s)
+        delay: 0,
+        type: ['kira1', 'kira2'][Math.floor(Math.random() * 2)],
+        isSparkle: true,
+        isBurst: true,
+      }))
+    : [];
+
   // Combine coins and sparkles
+  const coins = [...baseCoins, ...burstCoins];
+  const sparkles = [...baseSparkles, ...burstSparkles];
   const items = [...coins, ...sparkles];
 
   return (
     <div className="h-screen flex flex-col items-center justify-center bg-gradient-to-b from-yellow-200 via-yellow-100 to-amber-100 overflow-hidden relative" style={{ backgroundImage: 'url(https://files.manuscdn.com/user_upload_by_module/session_file/310519663052010650/UAYUTUlSRcSDmskr.jpg)', backgroundSize: 'cover', backgroundPosition: 'center' }}>
       {/* Coin rain animation - 12 coins with random positions and speeds */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        {items.map((item) => {
+        {items.map((item: any) => {
           if (item.isSparkle) {
             // Render sparkle
             const sparkleImages: Record<string, string> = {
@@ -111,16 +146,16 @@ export default function Home() {
                 style={{
                   position: 'absolute',
                   left: `${item.left}%`,
-                  top: `-40px`,
+                  top: item.isBurst ? '50%' : `-40px`,
                   width: '24px',
                   height: 'auto',
-                  animationName: 'coinFall',
+                  animationName: item.isBurst ? 'burstFall' : 'coinFall',
                   animationDuration: `${item.duration}s`,
-                  animationTimingFunction: 'linear',
-                  animationIterationCount: 'infinite',
+                  animationTimingFunction: item.isBurst ? 'ease-out' : 'linear',
+                  animationIterationCount: item.isBurst ? '1' : 'infinite',
                   animationDelay: `${item.delay}s`,
                   willChange: 'transform',
-                  opacity: 0.2,
+                  opacity: item.isBurst ? 1 : 0.2,
                   filter: 'drop-shadow(0 0 4px rgba(255, 215, 0, 0.6))',
                 } as React.CSSProperties}
               />
@@ -142,16 +177,16 @@ export default function Home() {
                 style={{
                   position: 'absolute',
                   left: `${coin.left}%`,
-                  top: `-50px`,
+                  top: coin.isBurst ? '50%' : `-50px`,
                   width: '38px',
                   height: 'auto',
-                  animationName: 'coinFall',
+                  animationName: coin.isBurst ? 'burstFall' : 'coinFall',
                   animationDuration: `${coin.duration}s`,
-                  animationTimingFunction: 'linear',
-                  animationIterationCount: 'infinite',
+                  animationTimingFunction: coin.isBurst ? 'ease-out' : 'linear',
+                  animationIterationCount: coin.isBurst ? '1' : 'infinite',
                   animationDelay: `${coin.delay}s`,
                   willChange: 'transform',
-                  opacity: 0.2,
+                  opacity: coin.isBurst ? 1 : 0.2,
                 } as React.CSSProperties}
               />
             );
@@ -170,6 +205,17 @@ export default function Home() {
           }
           100% {
             transform: translateY(100vh);
+            opacity: 0;
+          }
+        }
+
+        @keyframes burstFall {
+          0% {
+            transform: translateY(0) scale(1);
+            opacity: 1;
+          }
+          100% {
+            transform: translateY(100vh) scale(0.3);
             opacity: 0;
           }
         }
