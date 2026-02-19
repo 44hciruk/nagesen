@@ -342,7 +342,7 @@ export default function Home() {
           {showManekiNeko && (
             <div className="w-64 h-64 relative -mt-10" style={{ animation: 'floatIn 2s ease-in forwards' }}>
               <img
-                src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663052010650/mCCfmYgsvGgitRUp.png"
+                src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663052010650/KFLaeEugoUKIrops.png"
                 alt="Maneki-neko"
                 className="w-full h-full object-contain drop-shadow-lg"
               />
