@@ -146,7 +146,7 @@ export default function Home() {
                 style={{
                   position: 'absolute',
                   left: `${item.left}%`,
-                  top: item.isBurst ? '50%' : `-40px`,
+                  top: item.isBurst ? '-50px' : `-40px`,
                   width: '24px',
                   height: 'auto',
                   animationName: item.isBurst ? 'burstFall' : 'coinFall',
@@ -177,7 +177,7 @@ export default function Home() {
                 style={{
                   position: 'absolute',
                   left: `${coin.left}%`,
-                  top: coin.isBurst ? '50%' : `-50px`,
+                  top: coin.isBurst ? '-50px' : `-50px`,
                   width: '38px',
                   height: 'auto',
                   animationName: coin.isBurst ? 'burstFall' : 'coinFall',
