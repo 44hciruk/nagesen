@@ -16,6 +16,7 @@ export default function Home() {
   const [ripples, setRipples] = useState<Array<{ id: number; x: number; y: number }>>([]);
   const rippleIdRef = useState(0)[1];
   const [isThrowingEffect, setIsThrowingEffect] = useState(false);
+  const [showSpeechBubble, setShowSpeechBubble] = useState(false);
 
   // Show content with gentle fade-in animation and prevent scrolling
   useEffect(() => {
@@ -42,10 +43,8 @@ export default function Home() {
 
     setRipples((prev) => [...prev, { id, x, y }]);
 
-    // Trigger smartphone vibration
-    if (navigator.vibrate) {
-      navigator.vibrate([50, 30, 50]);
-    }
+    // Show speech bubble
+    setShowSpeechBubble(true);
 
     // Trigger throwing effect
     setIsThrowingEffect(true);
@@ -58,8 +57,9 @@ export default function Home() {
       setRipples((prev) => prev.filter((r) => r.id !== id));
     }, 600);
 
-    // Trigger redirect after effect completes (1.2s for faster navigation)
+    // Hide speech bubble and trigger redirect after effect completes (1.2s for faster navigation)
     setTimeout(() => {
+      setShowSpeechBubble(false);
       handlePayPayRedirect();
     }, 1200);
   };
@@ -351,6 +351,14 @@ export default function Home() {
                 alt="Maneki-neko"
                 className="w-full h-full object-contain drop-shadow-lg"
               />
+              {showSpeechBubble && (
+                <div className="absolute -right-32 top-8 bg-white rounded-lg px-4 py-2 shadow-lg whitespace-nowrap text-sm font-bold text-gray-800">
+                  <div className="relative">
+                    銭くれニャー
+                    <div className="absolute -left-2 top-1/2 transform -translate-y-1/2 w-0 h-0 border-t-8 border-b-8 border-r-8 border-t-transparent border-b-transparent border-r-white"></div>
+                  </div>
+                </div>
+              )}
             </div>
           )}
 
