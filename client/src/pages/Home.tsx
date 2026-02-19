@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 
 /**
  * Design Philosophy: Japanese Tradition meets Modern Humor
@@ -16,13 +16,6 @@ export default function Home() {
   const [ripples, setRipples] = useState<Array<{ id: number; x: number; y: number }>>([]);
   const rippleIdRef = useState(0)[1];
   const [isThrowingEffect, setIsThrowingEffect] = useState(false);
-  const [isMuted, setIsMuted] = useState(() => {
-    if (typeof window !== 'undefined') {
-      return localStorage.getItem('bgmMuted') === 'true';
-    }
-    return false;
-  });
-  const audioRef = useRef<HTMLAudioElement>(null);
 
   // Show content with gentle fade-in animation and prevent scrolling
   useEffect(() => {
@@ -34,21 +27,10 @@ export default function Home() {
     // Prevent vertical scrolling
     document.body.style.overflow = 'hidden';
     
-    // Initialize background music
-    if (audioRef.current) {
-      audioRef.current.volume = 0.15; // 15% volume
-      audioRef.current.loop = true;
-      if (!isMuted) {
-        audioRef.current.play().catch(() => {
-          // Autoplay may be blocked by browser
-        });
-      }
-    }
-    
     return () => {
       document.body.style.overflow = 'auto';
     };
-  }, [isMuted]);
+  }, []);
 
   // Handle ripple effect on button click
   const handleRippleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -81,23 +63,6 @@ export default function Home() {
   const handlePayPayRedirect = () => {
     const payPayUrl = 'https://qr.paypay.ne.jp/p2p01_nd8UMxxYcZOhhHUu';
     window.location.href = payPayUrl;
-  };
-
-  // Toggle BGM mute
-  const handleToggleMute = () => {
-    const newMutedState = !isMuted;
-    setIsMuted(newMutedState);
-    localStorage.setItem('bgmMuted', String(newMutedState));
-    
-    if (audioRef.current) {
-      if (newMutedState) {
-        audioRef.current.pause();
-      } else {
-        audioRef.current.play().catch(() => {
-          // Autoplay may be blocked by browser
-        });
-      }
-    }
   };
 
   // Generate random coins with varying positions, speeds, and types
@@ -358,18 +323,6 @@ export default function Home() {
           animation-delay: 0s;
         }
       `}</style>
-
-      {/* Background music */}
-      <audio ref={audioRef} src="/bgm.mp3" />
-
-      {/* Mute button */}
-      <button
-        onClick={handleToggleMute}
-        className="absolute top-6 right-6 z-20 p-2 rounded-full bg-white/80 hover:bg-white shadow-md transition-all duration-200"
-        title={isMuted ? 'Unmute' : 'Mute'}
-      >
-        <span className="text-xl">{isMuted ? '🔇' : '🔊'}</span>
-      </button>
 
       {/* Main content */}
       {showContent && (
