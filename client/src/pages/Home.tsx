@@ -16,12 +16,11 @@ export default function Home() {
   const [ripples, setRipples] = useState<Array<{ id: number; x: number; y: number }>>([]);
   const rippleIdRef = useState(0)[1];
   const [isThrowingEffect, setIsThrowingEffect] = useState(false);
-  const [volume, setVolume] = useState(() => {
+  const [isMuted, setIsMuted] = useState(() => {
     if (typeof window !== 'undefined') {
-      const saved = localStorage.getItem('bgmVolume');
-      return saved ? parseFloat(saved) : 0.05;
+      return localStorage.getItem('bgmMuted') === 'true';
     }
-    return 0.05;
+    return false;
   });
   const audioRef = useRef<HTMLAudioElement>(null);
 
@@ -36,38 +35,20 @@ export default function Home() {
     document.body.style.overflow = 'hidden';
     
     // Initialize background music
-    const initAudio = async () => {
-      if (audioRef.current) {
-        audioRef.current.volume = volume;
-        audioRef.current.loop = true;
-        try {
-          await audioRef.current.play();
-        } catch (err) {
-          console.log('Autoplay blocked, will play on interaction');
-        }
+    if (audioRef.current) {
+      audioRef.current.volume = 0.15; // 15% volume
+      audioRef.current.loop = true;
+      if (!isMuted) {
+        audioRef.current.play().catch(() => {
+          // Autoplay may be blocked by browser
+        });
       }
-    };
-    
-    initAudio();
-    
-    // Fallback: play on first user interaction
-    const handleUserInteraction = () => {
-      if (audioRef.current && audioRef.current.paused && volume > 0) {
-        audioRef.current.play().catch(() => {});
-      }
-      document.removeEventListener('click', handleUserInteraction);
-      document.removeEventListener('touchstart', handleUserInteraction);
-    };
-    
-    document.addEventListener('click', handleUserInteraction);
-    document.addEventListener('touchstart', handleUserInteraction);
+    }
     
     return () => {
       document.body.style.overflow = 'auto';
-      document.removeEventListener('click', handleUserInteraction);
-      document.removeEventListener('touchstart', handleUserInteraction);
     };
-  }, [volume]);
+  }, [isMuted]);
 
   // Handle ripple effect on button click
   const handleRippleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -102,20 +83,19 @@ export default function Home() {
     window.location.href = payPayUrl;
   };
 
-  // Handle volume change
-  const handleVolumeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newVolume = parseFloat(e.target.value);
-    setVolume(newVolume);
-    localStorage.setItem('bgmVolume', String(newVolume));
+  // Toggle BGM mute
+  const handleToggleMute = () => {
+    const newMutedState = !isMuted;
+    setIsMuted(newMutedState);
+    localStorage.setItem('bgmMuted', String(newMutedState));
     
     if (audioRef.current) {
-      audioRef.current.volume = newVolume;
-      if (newVolume === 0) {
+      if (newMutedState) {
         audioRef.current.pause();
       } else {
-        if (audioRef.current.paused) {
-          audioRef.current.play().catch(() => {});
-        }
+        audioRef.current.play().catch(() => {
+          // Autoplay may be blocked by browser
+        });
       }
     }
   };
@@ -129,104 +109,96 @@ export default function Home() {
     return {
       id: i,
       left: Math.random() * 100,
-      duration,
-      delay: Math.random() * 2,
+      duration: duration,
+      delay: i * 1.5, // Larger gap between coins (1.5s each)
       type: randomType,
-      isBurst: false,
+      isSparkle: false,
     };
   });
 
-  // Generate burst coins (triggered by button click)
-  const burstCoins = isThrowingEffect
-    ? Array.from({ length: 160 }, (_, i) => {
-        const coinTypes = ['coin2', 'coin3', 'coin4'];
-        const randomType = coinTypes[Math.floor(Math.random() * coinTypes.length)];
-        const duration = 1.2 + Math.random() * 0.6; // 1.2-1.8s fall
-        return {
-          id: `burst-${i}`,
-          left: Math.random() * 100,
-          duration,
-          delay: Math.random() * 0.3,
-          type: randomType,
-          isBurst: true,
-        };
-      })
-    : [];
-
-  // Generate burst kira (sparkles)
-  const burstKira = isThrowingEffect
-    ? Array.from({ length: 70 }, (_, i) => {
-        const kiraTypes = ['kira-01', 'kira-02'];
-        const randomType = kiraTypes[Math.floor(Math.random() * kiraTypes.length)];
-        const duration = 1.2 + Math.random() * 0.6; // 1.2-1.8s fall
-        return {
-          id: `kira-burst-${i}`,
-          left: Math.random() * 100,
-          duration,
-          delay: Math.random() * 0.3,
-          type: randomType,
-          isBurst: true,
-        };
-      })
-    : [];
-
-  const allCoins = [...baseCoins, ...burstCoins];
-  const allKira = [...Array.from({ length: 4 }, (_, i) => {
-    const duration = 11.2 + Math.random() * 5.9; // 11.2-17.1s
+  // Generate sparkles (キラキラ) mixed with coins - reduced to 4 for less overlap
+  const baseSparkles = Array.from({ length: 4 }, (_, i) => {
+    const sparkleTypes = ['kira1', 'kira2'];
+    const randomType = sparkleTypes[Math.floor(Math.random() * sparkleTypes.length)];
+    const duration = (8 + Math.random() * 4) / 0.7; // 70% speed (11.4-17.1s)
     return {
-      id: i,
+      id: `sparkle-${i}`,
       left: Math.random() * 100,
-      duration,
-      delay: Math.random() * 2,
-      isBurst: false,
+      duration: duration,
+      delay: Math.random() * 3, // Random staggered start
+      type: randomType,
+      isSparkle: true,
     };
-  }), ...burstKira];
+  });
+
+  // Generate burst coins for throwing effect
+  const burstCoins = isThrowingEffect
+    ? Array.from({ length: 160 }, (_, i) => ({
+        id: `burst-coin-${i}`,
+        left: Math.random() * 100, // Full width
+        duration: 1.2 + Math.random() * 0.6, // Slower burst (1.2-1.8s)
+        delay: Math.random() * 0.3, // Staggered start
+        type: ['coin2', 'coin3', 'coin4'][Math.floor(Math.random() * 3)],
+        isSparkle: false,
+        isBurst: true,
+      }))
+    : [];
+
+  // Generate burst sparkles for throwing effect
+  const burstSparkles = isThrowingEffect
+    ? Array.from({ length: 70 }, (_, i) => ({
+        id: `burst-sparkle-${i}`,
+        left: Math.random() * 100, // Full width
+        duration: 1.0 + Math.random() * 0.5, // Slower burst (1.0-1.5s)
+        delay: Math.random() * 0.3, // Staggered start
+        type: ['kira1', 'kira2'][Math.floor(Math.random() * 2)],
+        isSparkle: true,
+        isBurst: true,
+      }))
+    : [];
+
+  // Combine coins and sparkles
+  const coins = [...baseCoins, ...burstCoins];
+  const sparkles = [...baseSparkles, ...burstSparkles];
+  const items = [...coins, ...sparkles];
 
   return (
-    <div className="relative w-full h-screen overflow-hidden bg-gradient-to-b from-yellow-50 via-yellow-50 to-yellow-100">
-      {/* Background pattern */}
-      <div className="absolute inset-0 opacity-30" style={{
-        backgroundImage: `repeating-linear-gradient(45deg, transparent, transparent 35px, rgba(200,180,140,0.1) 35px, rgba(200,180,140,0.1) 70px)`,
-      }}></div>
-
-      {/* Animated kira (sparkles) */}
-      <div className="absolute inset-0 pointer-events-none">
-        {allKira.map((kira) => {
-          const kiraImages: Record<string, string> = {
-            'kira-01': 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663052010650/lfKfRqMCQfZPRxZN.svg',
-            'kira-02': 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663052010650/qZyaKQNNNRfYmUZP.svg',
-          };
-          const kiraType = 'type' in kira ? kira.type : 'kira-01';
-          return (
-            <img
-              key={kira.id}
-              src={kiraImages[kiraType] || kiraImages['kira-01']}
-              alt="kira"
-              style={{
-                position: 'absolute',
-                left: `${kira.left}%`,
-                top: kira.isBurst ? '-50px' : `-50px`,
-                width: kira.isBurst ? '24px' : '24px',
-                height: 'auto',
-                animationName: kira.isBurst ? 'burstFall' : 'coinFall',
-                animationDuration: `${'duration' in kira ? kira.duration : 11.2}s`,
-                animationTimingFunction: kira.isBurst ? 'ease-out' : 'linear',
-                animationIterationCount: kira.isBurst ? '1' : 'infinite',
-                animationDelay: `${'delay' in kira ? kira.delay : 0}s`,
-                willChange: 'transform',
-                opacity: kira.isBurst ? 1 : 0.2,
-                zIndex: kira.isBurst ? 50 : 1,
-              } as React.CSSProperties}
-            />
-          );
-        })}
-      </div>
-
-      {/* Animated coins */}
-      <div className="absolute inset-0 pointer-events-none">
-        {allCoins.map((coin) => {
-          if (typeof coin.id === 'number' || coin.id.startsWith('burst')) {
-            const coin_item = coin;
+    <div className="h-screen flex flex-col items-center justify-center bg-gradient-to-b from-yellow-200 via-yellow-100 to-amber-100 overflow-hidden relative" style={{ backgroundImage: 'url(https://files.manuscdn.com/user_upload_by_module/session_file/310519663052010650/UAYUTUlSRcSDmskr.jpg)', backgroundSize: 'cover', backgroundPosition: 'center' }}>
+      {/* Coin rain animation - 12 coins with random positions and speeds */}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden">
+        {items.map((item: any) => {
+          if (item.isSparkle) {
+            // Render sparkle
+            const sparkleImages: Record<string, string> = {
+              kira1: 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663052010650/SADnSLicALtKhvRl.svg',
+              kira2: 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663052010650/aZrRbCeIorsfZvEG.svg',
+            };
+            return (
+              <img
+                key={item.id}
+                src={sparkleImages[item.type]}
+                alt="sparkle"
+                style={{
+                  position: 'absolute',
+                  left: `${item.left}%`,
+                  top: item.isBurst ? '-50px' : `-40px`,
+                  width: '24px',
+                  height: 'auto',
+                  animationName: item.isBurst ? 'burstFall' : 'coinFall',
+                  animationDuration: `${item.duration}s`,
+                  animationTimingFunction: item.isBurst ? 'ease-out' : 'linear',
+                  animationIterationCount: item.isBurst ? '1' : 'infinite',
+                  animationDelay: `${item.delay}s`,
+                  willChange: 'transform',
+                  opacity: item.isBurst ? 1 : 0.2,
+                  filter: 'drop-shadow(0 0 4px rgba(255, 215, 0, 0.6))',
+                  zIndex: item.isBurst ? 50 : 1,
+                } as React.CSSProperties}
+              />
+            );
+          } else {
+            // Render coin
+            const coin = item;
             const coinImages: Record<string, string> = {
               coin2: 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663052010650/wogAFEOmgxzUhAka.svg',
               coin3: 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663052010650/OiOJcZEnXdubRMbq.svg',
@@ -235,23 +207,23 @@ export default function Home() {
             };
             return (
               <img
-                key={coin_item.id}
-                src={coinImages[coin_item.type]}
+                key={coin.id}
+                src={coinImages[coin.type]}
                 alt="coin"
                 style={{
                   position: 'absolute',
-                  left: `${coin_item.left}%`,
-                  top: coin_item.isBurst ? '-50px' : `-50px`,
-                  width: coin_item.isBurst ? '56px' : '38px',
+                  left: `${coin.left}%`,
+                  top: coin.isBurst ? '-50px' : `-50px`,
+                  width: coin.isBurst ? '56px' : '38px',
                   height: 'auto',
-                  animationName: coin_item.isBurst ? 'burstFall' : 'coinFall',
-                  animationDuration: `${coin_item.duration}s`,
-                  animationTimingFunction: coin_item.isBurst ? 'ease-out' : 'linear',
-                  animationIterationCount: coin_item.isBurst ? '1' : 'infinite',
-                  animationDelay: `${coin_item.delay}s`,
+                  animationName: coin.isBurst ? 'burstFall' : 'coinFall',
+                  animationDuration: `${coin.duration}s`,
+                  animationTimingFunction: coin.isBurst ? 'ease-out' : 'linear',
+                  animationIterationCount: coin.isBurst ? '1' : 'infinite',
+                  animationDelay: `${coin.delay}s`,
                   willChange: 'transform',
-                  opacity: coin_item.isBurst ? 1 : 0.2,
-                  zIndex: coin_item.isBurst ? 50 : 1,
+                  opacity: coin.isBurst ? 1 : 0.2,
+                  zIndex: coin.isBurst ? 50 : 1,
                   backfaceVisibility: 'hidden',
                   WebkitBackfaceVisibility: 'hidden',
                   transformStyle: 'flat',
@@ -290,31 +262,32 @@ export default function Home() {
         }
 
         @keyframes fadeInUp {
-          0% {
+          from {
             opacity: 0;
             transform: translateY(20px);
           }
-          100% {
+          to {
             opacity: 1;
             transform: translateY(0);
           }
         }
 
         @keyframes floatIn {
-          0% {
+          from {
             opacity: 0;
-            transform: translateY(20px);
           }
-          100% {
+          to {
             opacity: 1;
-            transform: translateY(0);
           }
         }
 
         @keyframes popIn {
           0% {
             opacity: 0;
-            transform: scale(0.8);
+            transform: scale(0.3);
+          }
+          50% {
+            transform: scale(1.1);
           }
           100% {
             opacity: 1;
@@ -389,20 +362,14 @@ export default function Home() {
       {/* Background music */}
       <audio ref={audioRef} src="/bgm.mp3" />
 
-      {/* Volume slider */}
-      <div className="absolute top-6 right-6 z-20 flex items-center gap-2 bg-white/80 rounded-full px-4 py-2 shadow-md">
-        <span className="text-lg">🔊</span>
-        <input
-          type="range"
-          min="0"
-          max="1"
-          step="0.01"
-          value={volume}
-          onChange={handleVolumeChange}
-          className="w-24 cursor-pointer"
-          title="Volume"
-        />
-      </div>
+      {/* Mute button */}
+      <button
+        onClick={handleToggleMute}
+        className="absolute top-6 right-6 z-20 p-2 rounded-full bg-white/80 hover:bg-white shadow-md transition-all duration-200"
+        title={isMuted ? 'Unmute' : 'Mute'}
+      >
+        <span className="text-xl">{isMuted ? '🔇' : '🔊'}</span>
+      </button>
 
       {/* Main content */}
       {showContent && (
