@@ -53,10 +53,10 @@ export default function Home() {
       setRipples((prev) => prev.filter((r) => r.id !== id));
     }, 600);
 
-    // Trigger redirect after a short delay
+    // Trigger redirect after effect completes (1.5s for animation + buffer)
     setTimeout(() => {
       handlePayPayRedirect();
-    }, 100);
+    }, 1800);
   };
 
   // Handle redirect to PayPay
@@ -98,11 +98,11 @@ export default function Home() {
 
   // Generate burst coins for throwing effect
   const burstCoins = isThrowingEffect
-    ? Array.from({ length: 60 }, (_, i) => ({
+    ? Array.from({ length: 80 }, (_, i) => ({
         id: `burst-coin-${i}`,
-        left: 50 + (Math.random() - 0.5) * 20, // Center area
-        duration: 0.8 + Math.random() * 0.4, // Fast burst (0.8-1.2s)
-        delay: 0,
+        left: Math.random() * 100, // Full width
+        duration: 1.2 + Math.random() * 0.6, // Slower burst (1.2-1.8s)
+        delay: Math.random() * 0.3, // Staggered start
         type: ['coin2', 'coin3', 'coin4', 'coin5'][Math.floor(Math.random() * 4)],
         isSparkle: false,
         isBurst: true,
@@ -111,11 +111,11 @@ export default function Home() {
 
   // Generate burst sparkles for throwing effect
   const burstSparkles = isThrowingEffect
-    ? Array.from({ length: 50 }, (_, i) => ({
+    ? Array.from({ length: 70 }, (_, i) => ({
         id: `burst-sparkle-${i}`,
-        left: 50 + (Math.random() - 0.5) * 20, // Center area
-        duration: 0.6 + Math.random() * 0.3, // Fast burst (0.6-0.9s)
-        delay: 0,
+        left: Math.random() * 100, // Full width
+        duration: 1.0 + Math.random() * 0.5, // Slower burst (1.0-1.5s)
+        delay: Math.random() * 0.3, // Staggered start
         type: ['kira1', 'kira2'][Math.floor(Math.random() * 2)],
         isSparkle: true,
         isBurst: true,
