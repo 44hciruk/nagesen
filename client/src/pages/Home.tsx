@@ -178,7 +178,7 @@ export default function Home() {
                   position: 'absolute',
                   left: `${coin.left}%`,
                   top: coin.isBurst ? '-50px' : `-50px`,
-                  width: '38px',
+                  width: coin.isBurst ? '56px' : '38px',
                   height: 'auto',
                   animationName: coin.isBurst ? 'burstFall' : 'coinFall',
                   animationDuration: `${coin.duration}s`,
