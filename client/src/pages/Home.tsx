@@ -191,6 +191,8 @@ export default function Home() {
                   zIndex: coin.isBurst ? 50 : 1,
                   backfaceVisibility: 'hidden',
                   WebkitBackfaceVisibility: 'hidden',
+                  transformStyle: 'flat',
+                  WebkitTransformStyle: 'flat',
                 } as React.CSSProperties}
               />
             );
