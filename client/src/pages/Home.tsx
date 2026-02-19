@@ -16,12 +16,19 @@ export default function Home() {
   const [ripples, setRipples] = useState<Array<{ id: number; x: number; y: number }>>([])
   const rippleIdRef = useState(0)[1];
 
-  // Show content with gentle fade-in animation
+  // Show content with gentle fade-in animation and prevent scrolling
   useEffect(() => {
     setShowContent(true);
     // Show both calligraphy and maneki-neko simultaneously
     setShowCalligraphy(true);
     setShowManekiNeko(true);
+    
+    // Prevent vertical scrolling
+    document.body.style.overflow = 'hidden';
+    
+    return () => {
+      document.body.style.overflow = 'auto';
+    };
   }, []);
 
   // Handle ripple effect on button click
