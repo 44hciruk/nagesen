@@ -16,18 +16,12 @@ export default function Home() {
   const [ripples, setRipples] = useState<Array<{ id: number; x: number; y: number }>>([])
   const rippleIdRef = useState(0)[1];
 
-  // Show content with floating animation and auto-play meow sound
+  // Show content with gentle fade-in animation
   useEffect(() => {
     setShowContent(true);
     // Show both calligraphy and maneki-neko simultaneously
     setShowCalligraphy(true);
     setShowManekiNeko(true);
-    
-    // Auto-play meow sound on page load
-    const audio = new Audio('https://files.manuscdn.com/user_upload_by_module/session_file/310519663052010650/SxgKHkdlVWUSQCQF.wav');
-    audio.play().catch(() => {
-      // Silently fail if audio can't play
-    });
   }, []);
 
   // Handle ripple effect on button click
@@ -39,12 +33,6 @@ export default function Home() {
     const id = Date.now();
 
     setRipples((prev) => [...prev, { id, x, y }]);
-
-    // Play meow sound
-    const audio = new Audio('https://files.manuscdn.com/user_upload_by_module/session_file/310519663052010650/SxgKHkdlVWUSQCQF.wav');
-    audio.play().catch(() => {
-      // Silently fail if audio can't play
-    });
 
     // Remove ripple after animation completes
     setTimeout(() => {
@@ -72,7 +60,7 @@ export default function Home() {
   }));
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-b from-yellow-200 via-yellow-100 to-amber-100 overflow-hidden relative" style={{ backgroundImage: 'url(https://files.manuscdn.com/user_upload_by_module/session_file/310519663052010650/djAUtxiQqvVXUVEv.png)', backgroundBlendMode: 'multiply', backgroundSize: '400px 400px' }}>
+    <div className="h-screen flex flex-col items-center justify-center bg-gradient-to-b from-yellow-200 via-yellow-100 to-amber-100 overflow-hidden relative" style={{ backgroundImage: 'url(https://files.manuscdn.com/user_upload_by_module/session_file/310519663052010650/UAYUTUlSRcSDmskr.jpg)', backgroundSize: 'cover', backgroundPosition: 'center' }}>
       {/* Coin rain animation - 12 coins with random positions and speeds */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
         {coins.map((coin) => (
@@ -130,11 +118,9 @@ export default function Home() {
         @keyframes floatIn {
           from {
             opacity: 0;
-            transform: translateY(30px);
           }
           to {
             opacity: 1;
-            transform: translateY(0);
           }
         }
 
@@ -213,10 +199,10 @@ export default function Home() {
 
       {/* Main content */}
       {showContent && (
-        <div className="flex flex-col items-center justify-center z-10 px-6 max-w-md gap-8 fade-in-up fade-in-up-delay-2">
+        <div className="flex flex-col items-center justify-center z-10 px-6 max-w-md gap-6 -mt-20">
           {/* Main heading - calligraphy image */}
           {showCalligraphy && (
-            <div style={{ animation: 'floatIn 0.8s ease-out forwards' }}>
+            <div style={{ animation: 'floatIn 2s ease-in forwards' }}>
               <img 
                 src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663052010650/vMNSMVVvrhnUKaWC.png"
                 alt="投げ銭を贈る"
@@ -227,7 +213,7 @@ export default function Home() {
 
           {/* Maneki-neko image with floating animation */}
           {showManekiNeko && (
-            <div className="w-56 h-56 relative -mt-10" style={{ animation: 'floatIn 0.8s ease-out forwards' }}>
+            <div className="w-56 h-56 relative -mt-10" style={{ animation: 'floatIn 2s ease-in forwards' }}>
               <img
                 src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663052010650/BHlLtdKUUWXnMFIV.png"
                 alt="Maneki-neko"
