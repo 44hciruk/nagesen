@@ -209,18 +209,18 @@ export default function Home() {
           {showCalligraphy && (
             <div style={{ animation: 'floatIn 2s ease-in forwards' }}>
               <img 
-                src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663052010650/vMNSMVVvrhnUKaWC.png"
+                src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663052010650/EQaWsOAqYCpeaNsd.png"
                 alt="投げ銭を贈る"
-                className="h-33 object-contain"
+                className="h-40 object-contain"
               />
             </div>
           )}
 
           {/* Maneki-neko image with floating animation */}
           {showManekiNeko && (
-            <div className="w-56 h-56 relative -mt-10" style={{ animation: 'floatIn 2s ease-in forwards' }}>
+            <div className="w-64 h-64 relative -mt-10" style={{ animation: 'floatIn 2s ease-in forwards' }}>
               <img
-                src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663052010650/obzsKUhLxNPaJZjM.jpeg"
+                src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663052010650/AspviGQMyaXhDqmk.png"
                 alt="Maneki-neko"
                 className="w-full h-full object-contain drop-shadow-lg"
               />
