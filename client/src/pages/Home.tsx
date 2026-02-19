@@ -157,6 +157,7 @@ export default function Home() {
                   willChange: 'transform',
                   opacity: item.isBurst ? 1 : 0.2,
                   filter: 'drop-shadow(0 0 4px rgba(255, 215, 0, 0.6))',
+                  zIndex: item.isBurst ? 50 : 1,
                 } as React.CSSProperties}
               />
             );
@@ -187,6 +188,7 @@ export default function Home() {
                   animationDelay: `${coin.delay}s`,
                   willChange: 'transform',
                   opacity: coin.isBurst ? 1 : 0.2,
+                  zIndex: coin.isBurst ? 50 : 1,
                 } as React.CSSProperties}
               />
             );
