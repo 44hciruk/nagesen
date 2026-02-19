@@ -103,7 +103,7 @@ export default function Home() {
         left: Math.random() * 100, // Full width
         duration: 1.2 + Math.random() * 0.6, // Slower burst (1.2-1.8s)
         delay: Math.random() * 0.3, // Staggered start
-        type: ['coin2', 'coin3', 'coin4', 'coin5'][Math.floor(Math.random() * 4)],
+        type: ['coin2', 'coin3', 'coin4'][Math.floor(Math.random() * 3)],
         isSparkle: false,
         isBurst: true,
       }))
