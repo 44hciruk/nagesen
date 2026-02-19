@@ -70,40 +70,91 @@ export default function Home() {
       duration: duration,
       delay: i * 1.5, // Larger gap between coins (1.5s each)
       type: randomType,
+      isSparkle: false,
     };
   });
+
+  // Generate sparkles (キラキラ) mixed with coins
+  const sparkles = Array.from({ length: 12 }, (_, i) => {
+    const sparkleTypes = ['kira1', 'kira2'];
+    const randomType = sparkleTypes[Math.floor(Math.random() * sparkleTypes.length)];
+    const duration = 8 + Math.random() * 4; // Slower fall (8-12s)
+    return {
+      id: `sparkle-${i}`,
+      left: Math.random() * 100,
+      duration: duration,
+      delay: Math.random() * 3, // Random staggered start
+      type: randomType,
+      isSparkle: true,
+    };
+  });
+
+  // Combine coins and sparkles
+  const items = [...coins, ...sparkles];
 
   return (
     <div className="h-screen flex flex-col items-center justify-center bg-gradient-to-b from-yellow-200 via-yellow-100 to-amber-100 overflow-hidden relative" style={{ backgroundImage: 'url(https://files.manuscdn.com/user_upload_by_module/session_file/310519663052010650/UAYUTUlSRcSDmskr.jpg)', backgroundSize: 'cover', backgroundPosition: 'center' }}>
       {/* Coin rain animation - 12 coins with random positions and speeds */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        {coins.map((coin) => {
-          const coinImages: Record<string, string> = {
-            coin1: 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663052010650/VyfavJKOuEgsVqHf.svg',
-            coin2: 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663052010650/wogAFEOmgxzUhAka.svg',
-            coin3: 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663052010650/OiOJcZEnXdubRMbq.svg',
-            coin4: 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663052010650/MdzMoiuFzpDjrKgJ.svg',
-          };
-          return (
-            <img
-              key={coin.id}
-              src={coinImages[coin.type]}
-              alt="coin"
-              style={{
-                position: 'absolute',
-                left: `${coin.left}%`,
-                top: `-50px`,
-                width: '50px',
-                height: 'auto',
-                animationName: 'coinFall',
-                animationDuration: `${coin.duration}s`,
-                animationTimingFunction: 'linear',
-                animationIterationCount: 'infinite',
-                animationDelay: `${coin.delay}s`,
-                willChange: 'transform',
-              } as React.CSSProperties}
-            />
-          );
+        {items.map((item) => {
+          if (item.isSparkle) {
+            // Render sparkle
+            const sparkleImages: Record<string, string> = {
+              kira1: 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663052010650/SADnSLicALtKhvRl.svg',
+              kira2: 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663052010650/aZrRbCeIorsfZvEG.svg',
+            };
+            return (
+              <img
+                key={item.id}
+                src={sparkleImages[item.type]}
+                alt="sparkle"
+                style={{
+                  position: 'absolute',
+                  left: `${item.left}%`,
+                  top: `-40px`,
+                  width: '32px',
+                  height: 'auto',
+                  animationName: 'coinFall',
+                  animationDuration: `${item.duration}s`,
+                  animationTimingFunction: 'linear',
+                  animationIterationCount: 'infinite',
+                  animationDelay: `${item.delay}s`,
+                  willChange: 'transform',
+                  opacity: 1.0,
+                  filter: 'drop-shadow(0 0 4px rgba(255, 215, 0, 0.6))',
+                } as React.CSSProperties}
+              />
+            );
+          } else {
+            // Render coin
+            const coin = item;
+            const coinImages: Record<string, string> = {
+              coin1: 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663052010650/VyfavJKOuEgsVqHf.svg',
+              coin2: 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663052010650/wogAFEOmgxzUhAka.svg',
+              coin3: 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663052010650/OiOJcZEnXdubRMbq.svg',
+              coin4: 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663052010650/MdzMoiuFzpDjrKgJ.svg',
+            };
+            return (
+              <img
+                key={coin.id}
+                src={coinImages[coin.type]}
+                alt="coin"
+                style={{
+                  position: 'absolute',
+                  left: `${coin.left}%`,
+                  top: `-50px`,
+                  width: '50px',
+                  height: 'auto',
+                  animationName: 'coinFall',
+                  animationDuration: `${coin.duration}s`,
+                  animationTimingFunction: 'linear',
+                  animationIterationCount: 'infinite',
+                  animationDelay: `${coin.delay}s`,
+                  willChange: 'transform',
+                } as React.CSSProperties}
+              />
+            );
+          }
         })}
       </div>
 
