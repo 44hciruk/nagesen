@@ -78,7 +78,7 @@ export default function Home() {
   const sparkles = Array.from({ length: 6 }, (_, i) => {
     const sparkleTypes = ['kira1', 'kira2'];
     const randomType = sparkleTypes[Math.floor(Math.random() * sparkleTypes.length)];
-    const duration = 8 + Math.random() * 4; // Slower fall (8-12s)
+    const duration = (8 + Math.random() * 4) / 0.7; // 70% speed (11.4-17.1s)
     return {
       id: `sparkle-${i}`,
       left: Math.random() * 100,
@@ -162,6 +162,9 @@ export default function Home() {
         @keyframes coinFall {
           0% {
             transform: translateY(0);
+            opacity: 0.7;
+          }
+          85% {
             opacity: 0.7;
           }
           100% {
