@@ -59,50 +59,60 @@ export default function Home() {
   };
 
   // Generate random coins with varying positions, speeds, and types
-  const coins = Array.from({ length: 12 }, (_, i) => ({
-    id: i,
-    left: Math.random() * 100,
-    duration: 8 + Math.random() * 2,
-    delay: (i / 12) * 1.0,
-  }));
+  const coins = Array.from({ length: 12 }, (_, i) => {
+    const coinTypes = ['front', 'angle1', 'angle2', 'side'];
+    const randomType = coinTypes[Math.floor(Math.random() * coinTypes.length)];
+    return {
+      id: i,
+      left: Math.random() * 100,
+      duration: 8 + Math.random() * 2,
+      delay: (i / 12) * 1.0,
+      type: randomType,
+    };
+  });
 
   return (
     <div className="h-screen flex flex-col items-center justify-center bg-gradient-to-b from-yellow-200 via-yellow-100 to-amber-100 overflow-hidden relative" style={{ backgroundImage: 'url(https://files.manuscdn.com/user_upload_by_module/session_file/310519663052010650/UAYUTUlSRcSDmskr.jpg)', backgroundSize: 'cover', backgroundPosition: 'center' }}>
       {/* Coin rain animation - 12 coins with random positions and speeds */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        {coins.map((coin) => (
-          <img
-            key={coin.id}
-            src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663052010650/NbOIqkKccibGXoJU.svg"
-            alt="coin"
-            style={{
-              position: 'absolute',
-              left: `${coin.left}%`,
-              top: `-40px`,
-              width: 'auto',
-              height: '40px',
-              animationName: 'coinFall',
-              animationDuration: `${coin.duration}s`,
-              animationTimingFunction: 'linear',
-              animationIterationCount: 'infinite',
-              animationDelay: `${coin.delay}s`,
-              willChange: 'transform',
-            } as React.CSSProperties}
-          />
-        ))}
+        {coins.map((coin) => {
+          const coinImages: Record<string, string> = {
+            front: 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663052010650/NbOIqkKccibGXoJU.svg',
+            angle1: 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663052010650/KtTIATUypRdwrKBp.svg',
+            angle2: 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663052010650/gerwlvdVKefGgiNP.svg',
+            side: 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663052010650/AqEmIzYuAUzKnPMr.svg',
+          };
+          return (
+            <img
+              key={coin.id}
+              src={coinImages[coin.type]}
+              alt="coin"
+              style={{
+                position: 'absolute',
+                left: `${coin.left}%`,
+                top: `-40px`,
+                width: 'auto',
+                height: '40px',
+                animationName: 'coinFall',
+                animationDuration: `${coin.duration}s`,
+                animationTimingFunction: 'linear',
+                animationIterationCount: 'infinite',
+                animationDelay: `${coin.delay}s`,
+                willChange: 'transform',
+              } as React.CSSProperties}
+            />
+          );
+        })}
       </div>
 
       <style>{`
         @keyframes coinFall {
           0% {
-            transform: translateY(0) rotateY(0deg);
+            transform: translateY(0);
             opacity: 0.7;
           }
-          50% {
-            transform: translateY(50vh) rotateY(180deg);
-          }
           100% {
-            transform: translateY(100vh) rotateY(360deg);
+            transform: translateY(100vh);
             opacity: 0;
           }
         }
