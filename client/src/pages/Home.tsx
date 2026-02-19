@@ -58,12 +58,12 @@ export default function Home() {
     window.location.href = payPayUrl;
   };
 
-  // Generate random coins with varying positions and speeds
-  const coins = Array.from({ length: 8 }, (_, i) => ({
+  // Generate random coins with varying positions, speeds, and types
+  const coins = Array.from({ length: 12 }, (_, i) => ({
     id: i,
     left: Math.random() * 100,
     duration: 8 + Math.random() * 2,
-    delay: (i / 8) * 1.0,
+    delay: (i / 12) * 1.0,
   }));
 
   return (
@@ -71,27 +71,23 @@ export default function Home() {
       {/* Coin rain animation - 12 coins with random positions and speeds */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
         {coins.map((coin) => (
-          <div
+          <img
             key={coin.id}
-            className="absolute rounded-full"
+            src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663052010650/NbOIqkKccibGXoJU.svg"
+            alt="coin"
             style={{
+              position: 'absolute',
               left: `${coin.left}%`,
               top: `-40px`,
-              width: '24px',
-              height: '24px',
-              background: 'radial-gradient(circle at 30% 30%, #FFED4E 0%, #FFD700 40%, #DAA520 70%, #B8860B 100%)',
-              border: '3px solid #8B6914',
-              borderRadius: '50%',
-              boxShadow: 'inset -2px -2px 4px rgba(0,0,0,0.3), inset 2px 2px 4px rgba(255,255,255,0.5), 0 4px 12px rgba(0,0,0,0.25), 0 8px 16px rgba(0,0,0,0.15)',
+              width: 'auto',
+              height: '40px',
               animationName: 'coinFall',
               animationDuration: `${coin.duration}s`,
               animationTimingFunction: 'linear',
               animationIterationCount: 'infinite',
               animationDelay: `${coin.delay}s`,
               willChange: 'transform',
-              perspective: '1000px',
-              transformStyle: 'preserve-3d'
-            }}
+            } as React.CSSProperties}
           />
         ))}
       </div>
