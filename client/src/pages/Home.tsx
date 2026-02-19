@@ -60,7 +60,7 @@ export default function Home() {
 
   // Generate random coins with varying positions, speeds, and types
   // Create continuous waterfall effect with staggered delays
-  const coins = Array.from({ length: 8 }, (_, i) => {
+  const coins = Array.from({ length: 6 }, (_, i) => {
     const coinTypes = ['coin2', 'coin3', 'coin4', 'coin5'];
     const randomType = coinTypes[Math.floor(Math.random() * coinTypes.length)];
     const duration = 10 + Math.random() * 3; // Slower fall (10-13s)
@@ -74,8 +74,8 @@ export default function Home() {
     };
   });
 
-  // Generate sparkles (キラキラ) mixed with coins - reduced to 6 for less frequency
-  const sparkles = Array.from({ length: 6 }, (_, i) => {
+  // Generate sparkles (キラキラ) mixed with coins - reduced to 4 for less overlap
+  const sparkles = Array.from({ length: 4 }, (_, i) => {
     const sparkleTypes = ['kira1', 'kira2'];
     const randomType = sparkleTypes[Math.floor(Math.random() * sparkleTypes.length)];
     const duration = (8 + Math.random() * 4) / 0.7; // 70% speed (11.4-17.1s)
@@ -112,7 +112,7 @@ export default function Home() {
                   position: 'absolute',
                   left: `${item.left}%`,
                   top: `-40px`,
-                  width: '32px',
+                  width: '24px',
                   height: 'auto',
                   animationName: 'coinFall',
                   animationDuration: `${item.duration}s`,
@@ -120,7 +120,7 @@ export default function Home() {
                   animationIterationCount: 'infinite',
                   animationDelay: `${item.delay}s`,
                   willChange: 'transform',
-                  opacity: 1.0,
+                  opacity: 0.35,
                   filter: 'drop-shadow(0 0 4px rgba(255, 215, 0, 0.6))',
                 } as React.CSSProperties}
               />
@@ -143,7 +143,7 @@ export default function Home() {
                   position: 'absolute',
                   left: `${coin.left}%`,
                   top: `-50px`,
-                  width: '50px',
+                  width: '38px',
                   height: 'auto',
                   animationName: 'coinFall',
                   animationDuration: `${coin.duration}s`,
@@ -151,6 +151,7 @@ export default function Home() {
                   animationIterationCount: 'infinite',
                   animationDelay: `${coin.delay}s`,
                   willChange: 'transform',
+                  opacity: 0.35,
                 } as React.CSSProperties}
               />
             );
