@@ -53,10 +53,10 @@ export default function Home() {
       setRipples((prev) => prev.filter((r) => r.id !== id));
     }, 600);
 
-    // Trigger redirect after effect completes (1.5s for animation + buffer)
+    // Trigger redirect after effect completes (1.2s for faster navigation)
     setTimeout(() => {
       handlePayPayRedirect();
-    }, 1800);
+    }, 1200);
   };
 
   // Handle redirect to PayPay
