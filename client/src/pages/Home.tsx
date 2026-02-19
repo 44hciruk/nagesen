@@ -98,7 +98,7 @@ export default function Home() {
 
   // Generate burst coins for throwing effect
   const burstCoins = isThrowingEffect
-    ? Array.from({ length: 20 }, (_, i) => ({
+    ? Array.from({ length: 60 }, (_, i) => ({
         id: `burst-coin-${i}`,
         left: 50 + (Math.random() - 0.5) * 20, // Center area
         duration: 0.8 + Math.random() * 0.4, // Fast burst (0.8-1.2s)
@@ -111,7 +111,7 @@ export default function Home() {
 
   // Generate burst sparkles for throwing effect
   const burstSparkles = isThrowingEffect
-    ? Array.from({ length: 15 }, (_, i) => ({
+    ? Array.from({ length: 50 }, (_, i) => ({
         id: `burst-sparkle-${i}`,
         left: 50 + (Math.random() - 0.5) * 20, // Center area
         duration: 0.6 + Math.random() * 0.3, // Fast burst (0.6-0.9s)
