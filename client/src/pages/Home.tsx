@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 
 /**
  * Design Philosophy: Japanese Tradition meets Modern Humor
@@ -16,6 +16,14 @@ export default function Home() {
   const [ripples, setRipples] = useState<Array<{ id: number; x: number; y: number }>>([]);
   const rippleIdRef = useState(0)[1];
   const [isThrowingEffect, setIsThrowingEffect] = useState(false);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
+
+  // Preload audio on component mount
+  useEffect(() => {
+    const audio = new Audio('/nyan.mp3');
+    audio.preload = 'auto';
+    audioRef.current = audio;
+  }, []);
 
   // Show content with gentle fade-in animation and prevent scrolling
   useEffect(() => {
@@ -42,9 +50,11 @@ export default function Home() {
 
     setRipples((prev) => [...prev, { id, x, y }]);
 
-    // Play nyan sound
-    const audio = new Audio('/nyan.mp3');
-    audio.play().catch((err) => console.error('Audio play failed:', err));
+    // Play nyan sound from preloaded audio
+    if (audioRef.current) {
+      audioRef.current.currentTime = 0; // Reset to start
+      audioRef.current.play().catch((err) => console.error('Audio play failed:', err));
+    }
 
     // Trigger throwing effect
     setIsThrowingEffect(true);
