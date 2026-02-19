@@ -42,6 +42,11 @@ export default function Home() {
 
     setRipples((prev) => [...prev, { id, x, y }]);
 
+    // Trigger smartphone vibration
+    if (navigator.vibrate) {
+      navigator.vibrate([50, 30, 50]);
+    }
+
     // Trigger throwing effect
     setIsThrowingEffect(true);
     setTimeout(() => {
