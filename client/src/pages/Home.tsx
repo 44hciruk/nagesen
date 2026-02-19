@@ -120,7 +120,7 @@ export default function Home() {
                   animationIterationCount: 'infinite',
                   animationDelay: `${item.delay}s`,
                   willChange: 'transform',
-                  opacity: 0.35,
+                  opacity: 0.2,
                   filter: 'drop-shadow(0 0 4px rgba(255, 215, 0, 0.6))',
                 } as React.CSSProperties}
               />
@@ -151,7 +151,7 @@ export default function Home() {
                   animationIterationCount: 'infinite',
                   animationDelay: `${coin.delay}s`,
                   willChange: 'transform',
-                  opacity: 0.35,
+                  opacity: 0.2,
                 } as React.CSSProperties}
               />
             );
