@@ -230,7 +230,7 @@ export default function Home() {
           {/* CTA Button - red gradient with ripple animation */}
           <button
             onClick={handleRippleClick}
-            style={{ animation: 'floatIn 2s ease-in forwards, buttonPulse 1.2s ease-in-out 2s infinite' }}
+            style={{ animation: 'floatIn 2s ease-in forwards, buttonPulse 1.2s ease-in-out infinite' }}
             className="relative px-12 py-5 text-lg font-bold bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white rounded-full shadow-lg hover:shadow-xl transition-all duration-200 overflow-hidden"
           >
             {ripples.map((ripple) => (
