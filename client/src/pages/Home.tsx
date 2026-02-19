@@ -189,6 +189,8 @@ export default function Home() {
                   willChange: 'transform',
                   opacity: coin.isBurst ? 1 : 0.2,
                   zIndex: coin.isBurst ? 50 : 1,
+                  backfaceVisibility: 'hidden',
+                  WebkitBackfaceVisibility: 'hidden',
                 } as React.CSSProperties}
               />
             );
