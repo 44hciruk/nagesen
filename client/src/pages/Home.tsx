@@ -59,14 +59,16 @@ export default function Home() {
   };
 
   // Generate random coins with varying positions, speeds, and types
+  // Create continuous waterfall effect with staggered delays
   const coins = Array.from({ length: 8 }, (_, i) => {
     const coinTypes = ['coin1', 'coin2', 'coin3', 'coin4'];
     const randomType = coinTypes[Math.floor(Math.random() * coinTypes.length)];
+    const duration = 10 + Math.random() * 3; // Slower fall (10-13s)
     return {
       id: i,
       left: Math.random() * 100,
-      duration: 8 + Math.random() * 2,
-      delay: (i / 8) * 1.0,
+      duration: duration,
+      delay: i * 1.5, // Larger gap between coins (1.5s each)
       type: randomType,
     };
   });
