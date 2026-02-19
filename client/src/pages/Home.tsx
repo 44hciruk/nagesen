@@ -42,6 +42,10 @@ export default function Home() {
 
     setRipples((prev) => [...prev, { id, x, y }]);
 
+    // Play nyan sound
+    const audio = new Audio('/nyan.mp3');
+    audio.play().catch((err) => console.error('Audio play failed:', err));
+
     // Trigger throwing effect
     setIsThrowingEffect(true);
     setTimeout(() => {
