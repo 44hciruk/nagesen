@@ -61,7 +61,7 @@ export default function Home() {
   // Generate random coins with varying positions, speeds, and types
   // Create continuous waterfall effect with staggered delays
   const coins = Array.from({ length: 8 }, (_, i) => {
-    const coinTypes = ['coin1', 'coin2', 'coin3', 'coin4'];
+    const coinTypes = ['coin2', 'coin3', 'coin4', 'coin5'];
     const randomType = coinTypes[Math.floor(Math.random() * coinTypes.length)];
     const duration = 10 + Math.random() * 3; // Slower fall (10-13s)
     return {
@@ -74,8 +74,8 @@ export default function Home() {
     };
   });
 
-  // Generate sparkles (キラキラ) mixed with coins
-  const sparkles = Array.from({ length: 12 }, (_, i) => {
+  // Generate sparkles (キラキラ) mixed with coins - reduced to 6 for less frequency
+  const sparkles = Array.from({ length: 6 }, (_, i) => {
     const sparkleTypes = ['kira1', 'kira2'];
     const randomType = sparkleTypes[Math.floor(Math.random() * sparkleTypes.length)];
     const duration = 8 + Math.random() * 4; // Slower fall (8-12s)
@@ -129,10 +129,10 @@ export default function Home() {
             // Render coin
             const coin = item;
             const coinImages: Record<string, string> = {
-              coin1: 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663052010650/VyfavJKOuEgsVqHf.svg',
               coin2: 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663052010650/wogAFEOmgxzUhAka.svg',
               coin3: 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663052010650/OiOJcZEnXdubRMbq.svg',
               coin4: 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663052010650/MdzMoiuFzpDjrKgJ.svg',
+              coin5: 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663052010650/cNVVFaQqgDnGyUBo.svg',
             };
             return (
               <img
