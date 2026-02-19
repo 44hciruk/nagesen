@@ -211,7 +211,7 @@ export default function Home() {
 
       {/* Main content */}
       {showContent && (
-        <div className="flex flex-col items-center justify-center z-10 px-6 max-w-md gap-6 -mt-20">
+        <div className="flex flex-col items-center justify-center z-10 px-6 max-w-md gap-6 -mt-32">
           {/* Main heading - calligraphy image */}
           {showCalligraphy && (
             <div style={{ animation: 'floatIn 2s ease-in forwards' }}>
