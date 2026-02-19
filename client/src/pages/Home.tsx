@@ -79,10 +79,10 @@ export default function Home() {
               top: `-40px`,
               width: '24px',
               height: '24px',
-              background: 'radial-gradient(circle at 35% 35%, #FFED4E, #FFD700)',
-              border: '2px solid #DAA520',
+              background: 'radial-gradient(circle at 30% 30%, #FFED4E 0%, #FFD700 40%, #DAA520 70%, #B8860B 100%)',
+              border: '3px solid #8B6914',
               borderRadius: '50%',
-              boxShadow: '0 2px 6px rgba(0,0,0,0.15)',
+              boxShadow: 'inset -2px -2px 4px rgba(0,0,0,0.3), inset 2px 2px 4px rgba(255,255,255,0.5), 0 4px 12px rgba(0,0,0,0.25), 0 8px 16px rgba(0,0,0,0.15)',
               animationName: 'coinFall',
               animationDuration: `${coin.duration}s`,
               animationTimingFunction: 'linear',
@@ -90,7 +90,7 @@ export default function Home() {
               animationDelay: `${coin.delay}s`,
               willChange: 'transform',
               perspective: '1000px',
-              transformStyle: 'preserve-3d',
+              transformStyle: 'preserve-3d'
             }}
           />
         ))}
