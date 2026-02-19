@@ -58,85 +58,55 @@ export default function Home() {
     window.location.href = payPayUrl;
   };
 
-  // Generate random coins and sparkles with varying positions and speeds
-  const coins = Array.from({ length: 12 }, (_, i) => {
-    const isSparkle = Math.random() > 0.6;
-    const rotation = Math.random() * 360;
-    return {
-      id: i,
-      left: Math.random() * 100,
-      duration: 8 + Math.random() * 2,
-      delay: (i / 12) * 1.0,
-      isSparkle,
-      rotation,
-    };
-  });
+  // Generate random coins with varying positions and speeds
+  const coins = Array.from({ length: 8 }, (_, i) => ({
+    id: i,
+    left: Math.random() * 100,
+    duration: 8 + Math.random() * 2,
+    delay: (i / 8) * 1.0,
+  }));
 
   return (
     <div className="h-screen flex flex-col items-center justify-center bg-gradient-to-b from-yellow-200 via-yellow-100 to-amber-100 overflow-hidden relative" style={{ backgroundImage: 'url(https://files.manuscdn.com/user_upload_by_module/session_file/310519663052010650/UAYUTUlSRcSDmskr.jpg)', backgroundSize: 'cover', backgroundPosition: 'center' }}>
-      {/* Coin rain animation - coins and sparkles with random positions and speeds */}
+      {/* Coin rain animation - 12 coins with random positions and speeds */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        {coins.map((coin) => {
-          if (coin.isSparkle) {
-            return (
-              <div
-                key={coin.id}
-                className="absolute"
-                style={{
-                  left: `${coin.left}%`,
-                  top: `-20px`,
-                  width: '16px',
-                  height: '16px',
-                  background: '#FFD700',
-                  clipPath: 'polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%)',
-                  boxShadow: '0 0 8px rgba(255, 215, 0, 0.8)',
-                  animationName: 'coinFall',
-                  animationDuration: `${coin.duration}s`,
-                  animationTimingFunction: 'linear',
-                  animationIterationCount: 'infinite',
-                  animationDelay: `${coin.delay}s`,
-                  willChange: 'transform',
-                } as React.CSSProperties}
-              />
-            );
-          }
-          return (
-            <div
-              key={coin.id}
-              className="absolute rounded-full"
-              style={{
-                left: `${coin.left}%`,
-                top: `-40px`,
-                width: '28px',
-                height: `${Math.abs(Math.cos(coin.rotation * Math.PI / 180)) * 28 + 8}px`,
-                background: 'radial-gradient(circle at 30% 30%, #FFED4E 0%, #FFD700 50%, #DAA520 100%)',
-                border: '2px solid #DAA520',
-                borderRadius: '50%',
-                boxShadow: '0 2px 8px rgba(0,0,0,0.2)',
-                animationName: 'coinFall',
-                animationDuration: `${coin.duration}s`,
-                animationTimingFunction: 'linear',
-                animationIterationCount: 'infinite',
-                animationDelay: `${coin.delay}s`,
-                willChange: 'transform',
-                transform: `rotateX(${coin.rotation}deg)`,
-              } as React.CSSProperties}
-            />
-          );
-        })}
+        {coins.map((coin) => (
+          <div
+            key={coin.id}
+            className="absolute rounded-full"
+            style={{
+              left: `${coin.left}%`,
+              top: `-40px`,
+              width: '24px',
+              height: '24px',
+              background: 'radial-gradient(circle at 30% 30%, #FFED4E 0%, #FFD700 40%, #DAA520 70%, #B8860B 100%)',
+              border: '3px solid #8B6914',
+              borderRadius: '50%',
+              boxShadow: 'inset -2px -2px 4px rgba(0,0,0,0.3), inset 2px 2px 4px rgba(255,255,255,0.5), 0 4px 12px rgba(0,0,0,0.25), 0 8px 16px rgba(0,0,0,0.15)',
+              animationName: 'coinFall',
+              animationDuration: `${coin.duration}s`,
+              animationTimingFunction: 'linear',
+              animationIterationCount: 'infinite',
+              animationDelay: `${coin.delay}s`,
+              willChange: 'transform',
+              perspective: '1000px',
+              transformStyle: 'preserve-3d'
+            }}
+          />
+        ))}
       </div>
 
       <style>{`
         @keyframes coinFall {
           0% {
-            transform: translateY(0);
+            transform: translateY(0) rotateY(0deg);
             opacity: 0.7;
           }
           50% {
-            transform: translateY(50vh);
+            transform: translateY(50vh) rotateY(180deg);
           }
           100% {
-            transform: translateY(100vh);
+            transform: translateY(100vh) rotateY(360deg);
             opacity: 0;
           }
         }
@@ -155,11 +125,23 @@ export default function Home() {
         @keyframes floatIn {
           from {
             opacity: 0;
-            transform: translateY(20px);
           }
           to {
             opacity: 1;
-            transform: translateY(0);
+          }
+        }
+
+        @keyframes popIn {
+          0% {
+            opacity: 0;
+            transform: scale(0.3);
+          }
+          50% {
+            transform: scale(1.1);
+          }
+          100% {
+            opacity: 1;
+            transform: scale(1);
           }
         }
 
@@ -176,10 +158,10 @@ export default function Home() {
 
         @keyframes buttonGlow {
           0%, 100% {
-            box-shadow: 0 8px 24px rgba(239, 68, 68, 0.4);
+            filter: brightness(1);
           }
           50% {
-            box-shadow: 0 12px 32px rgba(239, 68, 68, 0.6);
+            filter: brightness(1.1);
           }
         }
 
@@ -200,9 +182,25 @@ export default function Home() {
           position: absolute;
           border-radius: 50%;
           background: rgba(255, 255, 255, 0.6);
-          transform: scale(1);
-          animation: ripple 0.6s ease-out;
           pointer-events: none;
+          animation: ripple 0.6s ease-out;
+        }
+
+        .fade-in-up {
+          animation: fadeInUp 0.8s ease-out forwards;
+        }
+
+        .fade-in-up-delay-2 {
+          animation: fadeInUp 0.8s ease-out forwards;
+          animation-delay: 0.4s;
+        }
+
+        .pop-in {
+          animation: popIn 1s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+        }
+
+        .button-pulse {
+          animation: buttonPulse 1.2s ease-in-out infinite, buttonGlow 1.2s ease-in-out infinite;
         }
 
         /* Ensure button animations work with inline styles */
@@ -218,31 +216,30 @@ export default function Home() {
           {showCalligraphy && (
             <div style={{ animation: 'floatIn 2s ease-in forwards' }}>
               <img 
-                src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663052010650/RLNvuDxvwcfhfBXr.png"
+                src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663052010650/NvoOCWMTdfPIJRxj.png"
                 alt="投げ銭を贈る"
-                className="h-32 w-auto drop-shadow-lg"
+                className="h-32 object-contain"
               />
             </div>
           )}
 
-          {/* Maneki-neko (lucky cat) */}
+          {/* Maneki-neko image with floating animation */}
           {showManekiNeko && (
-            <div style={{ animation: 'floatIn 2s ease-in forwards' }} className="-mt-6">
-              <img 
-                src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663052010650/zKNvNnRXEhNQhKfI.png"
-                alt="招き猫"
-                className="h-56 w-auto drop-shadow-xl"
+            <div className="w-64 h-64 relative -mt-10" style={{ animation: 'floatIn 2s ease-in forwards' }}>
+              <img
+                src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663052010650/KFLaeEugoUKIrops.png"
+                alt="Maneki-neko"
+                className="w-full h-full object-contain drop-shadow-lg"
               />
             </div>
           )}
 
-          {/* PayPay button */}
+          {/* CTA Button - red gradient with ripple animation */}
           <button
             onClick={handleRippleClick}
-            className="relative px-12 py-4 bg-red-500 text-white font-bold text-lg rounded-full hover:bg-red-600 transition-colors overflow-hidden"
             style={{ animation: 'floatIn 2s ease-in forwards, buttonPulse 1.2s ease-in-out infinite' }}
+            className="relative px-12 py-5 text-lg font-bold bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white rounded-full shadow-lg hover:shadow-xl transition-all duration-200 overflow-hidden"
           >
-            PayPayを開く
             {ripples.map((ripple) => (
               <span
                 key={ripple.id}
@@ -250,11 +247,11 @@ export default function Home() {
                 style={{
                   left: `${ripple.x}px`,
                   top: `${ripple.y}px`,
-                  width: '0',
-                  height: '0',
+                  transform: 'translate(-50%, -50%)',
                 }}
               />
             ))}
+            PayPayを開く
           </button>
         </div>
       )}
