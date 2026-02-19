@@ -218,7 +218,7 @@ export default function Home() {
           }
           100% {
             transform: translateY(100vh);
-            opacity: 0;
+            opacity: 1;
           }
         }
 
