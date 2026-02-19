@@ -59,14 +59,14 @@ export default function Home() {
   };
 
   // Generate random coins with varying positions, speeds, and types
-  const coins = Array.from({ length: 12 }, (_, i) => {
-    const coinTypes = ['front', 'angle1', 'angle2', 'side'];
+  const coins = Array.from({ length: 8 }, (_, i) => {
+    const coinTypes = ['coin1', 'coin2', 'coin3', 'coin4'];
     const randomType = coinTypes[Math.floor(Math.random() * coinTypes.length)];
     return {
       id: i,
       left: Math.random() * 100,
       duration: 8 + Math.random() * 2,
-      delay: (i / 12) * 1.0,
+      delay: (i / 8) * 1.0,
       type: randomType,
     };
   });
@@ -77,10 +77,10 @@ export default function Home() {
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
         {coins.map((coin) => {
           const coinImages: Record<string, string> = {
-            front: 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663052010650/NbOIqkKccibGXoJU.svg',
-            angle1: 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663052010650/KtTIATUypRdwrKBp.svg',
-            angle2: 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663052010650/gerwlvdVKefGgiNP.svg',
-            side: 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663052010650/AqEmIzYuAUzKnPMr.svg',
+            coin1: 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663052010650/VyfavJKOuEgsVqHf.svg',
+            coin2: 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663052010650/wogAFEOmgxzUhAka.svg',
+            coin3: 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663052010650/OiOJcZEnXdubRMbq.svg',
+            coin4: 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663052010650/MdzMoiuFzpDjrKgJ.svg',
           };
           return (
             <img
@@ -90,9 +90,9 @@ export default function Home() {
               style={{
                 position: 'absolute',
                 left: `${coin.left}%`,
-                top: `-40px`,
-                width: 'auto',
-                height: '40px',
+                top: `-50px`,
+                width: '50px',
+                height: 'auto',
                 animationName: 'coinFall',
                 animationDuration: `${coin.duration}s`,
                 animationTimingFunction: 'linear',
