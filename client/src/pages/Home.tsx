@@ -98,7 +98,7 @@ export default function Home() {
 
   // Generate burst coins for throwing effect
   const burstCoins = isThrowingEffect
-    ? Array.from({ length: 80 }, (_, i) => ({
+    ? Array.from({ length: 160 }, (_, i) => ({
         id: `burst-coin-${i}`,
         left: Math.random() * 100, // Full width
         duration: 1.2 + Math.random() * 0.6, // Slower burst (1.2-1.8s)
